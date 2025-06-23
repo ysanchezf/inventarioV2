@@ -3,9 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 export function ItemTable() {
-  const { data, isLoading, error } = useQuery(['items'], () =>
-    axios.get('/api/items').then(res => res.data)
-  );
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['items'],
+    queryFn: () => axios.get('/api/items').then(res => res.data),
+  });
 
   if (isLoading) return <p>Cargando items…</p>;
   if (error) return <p>Error al cargar items.</p>;

@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   table: {
-    display: 'table',
+    /* display: 'table' causes a type error with @react-pdf styles */
+    // display: 'table', // not supported by type definitions
     width: 'auto',
     borderStyle: 'solid',
     borderWidth: 1,

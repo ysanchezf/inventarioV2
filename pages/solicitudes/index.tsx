@@ -1,14 +1,16 @@
-import { useQuery } from "react-query";
+import { useQuery } from '@tanstack/react-query';
 import axios from "axios";
 import { RequestForm } from "../../components/RequestForm";
 
 export default function SolicitudesPage() {
-  const { data: items } = useQuery("items", () =>
-    axios.get("/api/items").then((r) => r.data)
-  );
-  const { data: sols, refetch } = useQuery("solicitudes", () =>
-    axios.get("/api/solicitudes").then((r) => r.data)
-  );
+  const { data: items } = useQuery({
+    queryKey: ['items'],
+    queryFn: () => axios.get('/api/items').then((r) => r.data),
+  });
+  const { data: sols, refetch } = useQuery({
+    queryKey: ['solicitudes'],
+    queryFn: () => axios.get('/api/solicitudes').then((r) => r.data),
+  });
 
   const approve = async (id: number, estado: string) => {
     await axios.patch(`/api/solicitudes/${id}`, { estado });

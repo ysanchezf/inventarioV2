@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SolicitudCreateSchema } from "../lib/zodSchemas";
 import axios from "axios";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from '@tanstack/react-query';
 
 export function RequestForm({ items }: { items: any[] }) {
   const qc = useQueryClient();
@@ -12,7 +12,7 @@ export function RequestForm({ items }: { items: any[] }) {
 
   const onSubmit = async (data: any) => {
     await axios.post("/api/solicitudes", data);
-    qc.invalidateQueries("solicitudes");
+    qc.invalidateQueries({ queryKey: ['solicitudes'] });
   };
 
   return (

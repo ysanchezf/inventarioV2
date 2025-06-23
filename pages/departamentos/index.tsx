@@ -1,11 +1,12 @@
-import { useQuery } from "react-query";
+import { useQuery } from '@tanstack/react-query';
 import axios from "axios";
 import { DepartmentForm } from "../../components/DepartmentForm";
 
 export default function DeptPage() {
-  const { data, refetch } = useQuery("deps", () =>
-    axios.get("/api/departamentos").then((r) => r.data)
-  );
+  const { data, refetch } = useQuery({
+    queryKey: ['deps'],
+    queryFn: () => axios.get('/api/departamentos').then((r) => r.data),
+  });
 
   return (
     <div>

@@ -6,13 +6,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { matricula } = req.query;
-  if (typeof matricula !== 'string') {
-    return res.status(400).send('Matrícula inválida');
+  // El correo de confirmación envía la matrícula como "token"
+  const { token } = req.query
+  if (typeof token !== 'string') {
+    return res.status(400).send('Matrícula inválida')
   }
   try {
     await prisma.usuario.update({
-      where: { matricula },
+      where: { matricula: token },
       data: { confirmed: true },
     });
     return res.redirect('/auth/signin?confirmed=1');

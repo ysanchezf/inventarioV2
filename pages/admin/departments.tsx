@@ -51,9 +51,10 @@ export default function AdminDepartments({ departamentos, usuarios }: Props) {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value, options } = e.target
-    if (name === 'usuarios' && options) {
-      const selected = Array.from(options)
+    const { name, value } = e.target
+    if (name === 'usuarios') {
+      const target = e.target as HTMLSelectElement
+      const selected = Array.from(target.options)
         .filter(o => o.selected)
         .map(o => Number(o.value))
       setForm(f => ({ ...f, usuarios: selected }))

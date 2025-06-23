@@ -1,6 +1,6 @@
-"node_modules/" 
-"*.zip" 
-"node_modules/" 
-"*.zip" 
-"node_modules/" 
-"*.zip" 
+node_modules/
+*.zip
+.env
+
+# local env file used by vs code or other tools
+.env.local

@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Layout from '../../components/Layout'
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 type User = {
   id: number
@@ -19,6 +20,7 @@ export default function AdminUsers({ users }: Props) {
   const [list, setList] = useState<User[]>(users)
   const [showModal, setShowModal] = useState(false)
   const [editing, setEditing] = useState<User | null>(null)
+  const [highlightId, setHighlightId] = useState<number | null>(null)
   const [form, setForm] = useState({
     matricula: '',
     nombre: '',
@@ -102,14 +104,18 @@ export default function AdminUsers({ users }: Props) {
     try {
       data = JSON.parse(text)
     } catch {
-      setError(`Error en servidor: ${res.status}`)
+      const msg = `Error en servidor: ${res.status}`
+      setError(msg)
+      toast.error(msg)
       setLoading(false)
       return
     }
 
     setLoading(false)
     if (!res.ok) {
-      setError(data.message || 'Error al guardar usuario')
+      const msg = data.message || 'Error al guardar usuario'
+      setError(msg)
+      toast.error(msg)
     } else {
       if (isEdit) {
         setList(l => l.map(u => (u.id === data.id ? data : u)))
@@ -117,6 +123,9 @@ export default function AdminUsers({ users }: Props) {
         setList(l => [data, ...l])
       }
       setShowModal(false)
+      toast.success('Guardado correctamente')
+      setHighlightId(data.id)
+      setTimeout(() => setHighlightId(null), 2000)
     }
   }
 
@@ -145,7 +154,7 @@ export default function AdminUsers({ users }: Props) {
           </thead>
           <tbody>
             {list.map(u => (
-              <tr key={u.id}>
+              <tr key={u.id} className={highlightId === u.id ? 'row-highlight' : ''}>
                 <td>{u.matricula}</td>
                 <td>{u.nombre} {u.apellido}</td>
                 <td>{u.email}</td>

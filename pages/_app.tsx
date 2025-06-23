@@ -2,6 +2,7 @@
 import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Toaster } from 'react-hot-toast'
 import '../styles/global.css'
 
 // 1) Crea un QueryClient de React Query
@@ -18,6 +19,7 @@ export default function App({
       <QueryClientProvider client={queryClient}>
         {/* 4) Renderiza la página */}
         <Component {...pageProps} />
+        <Toaster position="top-right" />
       </QueryClientProvider>
     </SessionProvider>
   )

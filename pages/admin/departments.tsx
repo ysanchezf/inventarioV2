@@ -4,6 +4,7 @@ import { getSession } from 'next-auth/react'
 import Layout from '../../components/Layout'
 import { prisma } from '../../lib/prisma'
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 type Usuario = { id: number; nombre: string; apellido: string }
 type Departamento = {
@@ -22,6 +23,7 @@ export default function AdminDepartments({ departamentos, usuarios }: Props) {
   const [list, setList] = useState<Departamento[]>(departamentos)
   const [showModal, setShowModal] = useState(false)
   const [editing, setEditing] = useState<Departamento | null>(null)
+  const [highlightId, setHighlightId] = useState<number | null>(null)
   const [form, setForm] = useState({
     nombre: '',
     descripcion: '',
@@ -93,8 +95,12 @@ export default function AdminDepartments({ departamentos, usuarios }: Props) {
         setList(l => [...l, data])
       }
       setShowModal(false)
+      toast.success('Guardado correctamente')
+      setHighlightId(data.id)
+      setTimeout(() => setHighlightId(null), 2000)
     } catch (err: any) {
       setError(err.message)
+      toast.error(err.message)
     } finally {
       setLoading(false)
     }
@@ -183,7 +189,7 @@ export default function AdminDepartments({ departamentos, usuarios }: Props) {
           </thead>
           <tbody>
             {list.map(d => (
-              <tr key={d.id}>
+              <tr key={d.id} className={highlightId === d.id ? 'row-highlight' : ''}>
                 <td>{d.nombre}</td>
                 <td>{d.descripcion}</td>
                 <td>

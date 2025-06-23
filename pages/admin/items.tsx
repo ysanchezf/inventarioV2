@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Layout from '../../components/Layout'
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 type Item = {
   id: number
@@ -32,6 +33,7 @@ export default function AdminItems({
 
   const [showModal, setShowModal] = useState(false)
   const [editing, setEditing] = useState<Item | null>(null)
+  const [highlightId, setHighlightId] = useState<number | null>(null)
   const [form, setForm] = useState({
     nombre: '',
     descripcion: '',
@@ -86,7 +88,9 @@ export default function AdminItems({
     let deptId: number
     if (form.departamentoId === 'new') {
       if (!form.newDeptName.trim()) {
-        setError('Debe indicar nombre de nuevo departamento')
+        const msg = 'Debe indicar nombre de nuevo departamento'
+        setError(msg)
+        toast.error(msg)
         setLoading(false)
         return
       }
@@ -98,7 +102,9 @@ export default function AdminItems({
         body: JSON.stringify({ nombre: form.newDeptName.trim() }),
       })
       if (!resDept.ok) {
-        setError('Error al crear departamento')
+        const msg = 'Error al crear departamento'
+        setError(msg)
+        toast.error(msg)
         setLoading(false)
         return
       }
@@ -131,14 +137,18 @@ export default function AdminItems({
     try {
       data = JSON.parse(text)
     } catch {
-      setError(`Error en servidor: ${res.status}`)
+      const msg = `Error en servidor: ${res.status}`
+      setError(msg)
+      toast.error(msg)
       setLoading(false)
       return
     }
 
     setLoading(false)
     if (!res.ok) {
-      setError((data as any).message || 'Error al guardar equipo')
+      const msg = (data as any).message || 'Error al guardar equipo'
+      setError(msg)
+      toast.error(msg)
     } else {
       if (editing) {
         setList(l => l.map(i => i.id === data.id ? data : i))
@@ -146,6 +156,9 @@ export default function AdminItems({
         setList(l => [data, ...l])
       }
       setShowModal(false)
+      toast.success('Guardado correctamente')
+      setHighlightId(data.id)
+      setTimeout(() => setHighlightId(null), 2000)
     }
   }
 
@@ -260,7 +273,7 @@ export default function AdminItems({
           </thead>
           <tbody>
             {list.map(i => (
-              <tr key={i.id}>
+              <tr key={i.id} className={highlightId === i.id ? 'row-highlight' : ''}>
                 <td>{i.nombre}</td>
                 <td>{i.cantidadDisponible}</td>
                 <td>{i.cantidadTotal}</td>

@@ -274,6 +274,19 @@ nav {
   transform: translateY(-2px);
 }
 
+/* Animación para resaltar filas actualizadas */
+.row-highlight td {
+  animation: row-highlight 2s ease-out;
+}
+@keyframes row-highlight {
+  from {
+    background-color: #fffbdd;
+  }
+  to {
+    background-color: var(--surface);
+  }
+}
+
 /* ==========================================================================
   10) MODALES & FORMULARIOS
    ========================================================================== */

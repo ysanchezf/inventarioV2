@@ -27,6 +27,9 @@
   --radius: 0.75rem;
   --shadow-light: rgba(0, 0, 0, 0.05);
   --shadow-strong: rgba(0, 0, 0, 0.15);
+  --font-main: 'Inter', system-ui, sans-serif;
+  --gradient-main: linear-gradient(90deg, var(--primary), var(--accent));
+  --hero-bg: linear-gradient(180deg, #ffffff 0%, #eaf6f1 100%);
 }
 
 /* ==========================================================================
@@ -38,7 +41,7 @@ body {
   min-height: 100%;
   background: var(--bg);
   color: var(--text);
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-main);
   line-height: 1.9;
 }
 
@@ -56,7 +59,7 @@ body {
    5) HEADER & NAVIGACIÓN
    ========================================================================== */
 header {
-  background: var(--primary);
+  background: var(--gradient-main);
   color: var(--white);
   position: sticky;
   top: 0;
@@ -147,7 +150,8 @@ nav {
 }
 .button.primary,
 .btn-primary {
-  background: var(--accent);
+  background: var(--gradient-main);
+  background-size: 200% 100%;
   color: var(--white);
   border: none;
   box-shadow: 0 4px 12px var(--shadow-light);
@@ -156,6 +160,7 @@ nav {
 .btn-primary:hover {
   box-shadow: 0 6px 18px var(--shadow-strong);
   transform: translateY(-4px) scale(1.02);
+  background-position: 100% 0;
 }
 .button.secondary,
 .btn-secondary {
@@ -174,7 +179,7 @@ nav {
    7) HERO
    ========================================================================== */
 .hero {
-  background: var(--surface);
+  background: var(--hero-bg);
   text-align: center;
   padding: 4rem 1rem;
 }
@@ -203,7 +208,7 @@ nav {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  padding: 8rem;
+  padding: 4rem 1rem;
 }
 .card {
   background: var(--surface);

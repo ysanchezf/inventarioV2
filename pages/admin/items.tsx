@@ -162,6 +162,24 @@ export default function AdminItems({
     }
   }
 
+  const handleDelete = async (id: number) => {
+    try {
+      const res = await fetch(`/api/admin/items/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+      if (!res.ok) {
+        const msg = `Error ${res.status} al eliminar`
+        toast.error(msg)
+        return
+      }
+      setList(l => l.filter(i => i.id !== id))
+      toast.success('Equipo eliminado')
+    } catch (err: any) {
+      toast.error(err.message || 'Error al eliminar equipo')
+    }
+  }
+
   return (
     <Layout>
       <section className="app-container header-flex">
@@ -283,6 +301,14 @@ export default function AdminItems({
                     onClick={() => openEdit(i)}
                   >
                     Editar
+                  </button>
+                  {' '}
+                  <button
+                    className="btn btn-secondary btn-small"
+                    onClick={() => handleDelete(i.id)}
+                    style={{ marginLeft: '0.5rem' }}
+                  >
+                    Eliminar
                   </button>
                 </td>
               </tr>

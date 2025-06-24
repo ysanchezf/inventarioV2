@@ -129,6 +129,24 @@ export default function AdminUsers({ users }: Props) {
     }
   }
 
+  const handleDelete = async (id: number) => {
+    const res = await fetch(`/api/admin/users/${id}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    })
+    if (res.ok) {
+      setList(l => l.filter(u => u.id !== id))
+      toast.success('Usuario eliminado')
+    } else {
+      let data: any = null
+      try {
+        data = await res.json()
+      } catch {}
+      const msg = data?.message || `Error ${res.status}`
+      toast.error(msg)
+    }
+  }
+
   return (
     <Layout>
       <section className="app-container header-flex">
@@ -165,6 +183,14 @@ export default function AdminUsers({ users }: Props) {
                     onClick={() => openEdit(u)}
                   >
                     Editar
+                  </button>
+                  {' '}
+                  <button
+                    className="btn btn-secondary btn-small"
+                    onClick={() => handleDelete(u.id)}
+                    style={{ marginLeft: '.5rem' }}
+                  >
+                    Eliminar
                   </button>
                 </td>
               </tr>

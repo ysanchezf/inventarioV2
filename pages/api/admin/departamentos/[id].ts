@@ -13,6 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: 'ID inválido' })
   }
   const depId = Number(id)
+  const actorId = Number(token.sub)
 
   // Actualizar departamento o sus usuarios
   if (req.method === 'PATCH') {
@@ -22,6 +23,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Falta nombre' })
     }
     try {
+      const before = await prisma.departamento.findUnique({
+        where: { id: depId },
+        select: { nombre: true, descripcion: true }
+      })
+
       const data: any = { nombre, descripcion: descripcion || undefined }
       if (Array.isArray(usuarios)) {
         data.usuarios = {
@@ -33,6 +39,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         data,
         include: { usuarios: { select: { id: true } } },
       })
+      await prisma.auditLog.create({
+        data: {
+          userId: actorId,
+          action: 'EDITAR',
+          entity: 'Departamento',
+          entityId: depId,
+          changes: { antes: before, despues: { nombre, descripcion } }
+        }
+      })
       return res.status(200).json(updated)
     } catch (e: any) {
       console.error(e)
@@ -43,7 +58,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Eliminar departamento
   if (req.method === 'DELETE') {
     try {
+      const before = await prisma.departamento.findUnique({
+        where: { id: depId },
+        select: { nombre: true }
+      })
+
       await prisma.departamento.delete({ where: { id: depId } })
+
+      await prisma.auditLog.create({
+        data: {
+          userId: actorId,
+          action: 'ELIMINAR',
+          entity: 'Departamento',
+          entityId: depId,
+          changes: before
+        }
+      })
+
       return res.status(204).end()
     } catch (e: any) {
       console.error(e)

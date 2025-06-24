@@ -11,9 +11,32 @@ type Log = {
   entity: string
   entityId: number
   timestamp: string
+  changes: any
 }
 
 type Props = { logs: Log[] }
+
+function describeChange(log: Log) {
+  const action = log.action.toUpperCase()
+  const entity = log.entity.toLowerCase()
+  const name =
+    log.changes?.despues?.nombre ||
+    log.changes?.antes?.nombre ||
+    log.changes?.nombre
+  if (action === 'ELIMINAR') {
+    return `Se eliminó ${entity} ${name ?? log.entityId}`
+  }
+  if (action === 'EDITAR') {
+    return `Se modificó ${entity} ${name ?? log.entityId}`
+  }
+  if (action === 'APROBAR') {
+    return `Se aprobó ${entity} ${log.entityId}`
+  }
+  if (action === 'RECHAZAR') {
+    return `Se rechazó ${entity} ${log.entityId}`
+  }
+  return `${action} ${entity} ${log.entityId}`
+}
 
 export default function AuditPage({ logs }: Props) {
   return (
@@ -28,6 +51,7 @@ export default function AuditPage({ logs }: Props) {
               <th>Acción</th>
               <th>Entidad</th>
               <th>Entidad ID</th>
+              <th>Cambio</th>
             </tr>
           </thead>
           <tbody>
@@ -38,6 +62,7 @@ export default function AuditPage({ logs }: Props) {
                 <td>{l.action}</td>
                 <td>{l.entity}</td>
                 <td>{l.entityId}</td>
+                <td>{describeChange(l)}</td>
               </tr>
             ))}
           </tbody>

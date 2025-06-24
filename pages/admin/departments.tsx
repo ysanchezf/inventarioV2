@@ -32,6 +32,24 @@ export default function AdminDepartments({ departamentos, usuarios }: Props) {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
+  const handleDelete = async (id: number) => {
+    if (!confirm('¿Eliminar departamento?')) return
+    try {
+      const res = await fetch(`/api/admin/departamentos/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.message || 'Error al eliminar departamento')
+      }
+      setList(l => l.filter(d => d.id !== id))
+      toast.success('Departamento eliminado')
+    } catch (err: any) {
+      toast.error(err.message)
+    }
+  }
+
   const openCreate = () => {
     setEditing(null)
     setForm({ nombre: '', descripcion: '', usuarios: [] })
@@ -201,6 +219,13 @@ export default function AdminDepartments({ departamentos, usuarios }: Props) {
                     onClick={() => openEdit(d)}
                   >
                     Editar
+                  </button>
+                  <button
+                    className="btn btn-small btn-secondary"
+                    style={{ marginLeft: '.5rem' }}
+                    onClick={() => handleDelete(d.id)}
+                  >
+                    Eliminar
                   </button>
                 </td>
               </tr>

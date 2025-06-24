@@ -64,8 +64,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           action: 'ELIMINAR',
           entity: 'Departamento',
           entityId: Number(id),
-          changes: dep || undefined,
-        },
+          changes: dep
+        }
       });
 
       return res.status(204).end();

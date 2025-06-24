@@ -18,10 +18,20 @@ export default function AdminRequestsPage() {
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string|null>(null)
+  const [entidadId, setEntidadId] = useState('')
+  const [fecha, setFecha] = useState('')
+  const [usuario, setUsuario] = useState('')
+  const [item, setItem] = useState('')
 
-  // 1) Carga inicial
+  // 1) Carga con filtros
   useEffect(() => {
-    fetch('/api/admin/requests', { credentials: 'include' })
+    setLoading(true)
+    const params = new URLSearchParams()
+    if (entidadId) params.set('entidadId', entidadId)
+    if (fecha)     params.set('fecha', fecha)
+    if (usuario)   params.set('usuario', usuario)
+    if (item)      params.set('item', item)
+    fetch(`/api/admin/requests?${params.toString()}`, { credentials: 'include' })
       .then((res) => {
         if (!res.ok) throw new Error(`Error ${res.status}`)
         return res.json()
@@ -29,7 +39,7 @@ export default function AdminRequestsPage() {
       .then((data: Solicitud[]) => setSolicitudes(data))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
-  }, [])
+  }, [entidadId, fecha, usuario, item])
 
   // 2) Aprobar/Rechazar con comentario
   const handleUpdate = async (
@@ -87,6 +97,31 @@ export default function AdminRequestsPage() {
     <Layout>
       <section className="app-container">
         <h2>Revisión de Solicitudes</h2>
+        <div style={{ display: 'flex', gap: '.5rem', marginBottom: '1rem' }}>
+          <input
+            type="number"
+            placeholder="Entidad ID"
+            value={entidadId}
+            onChange={e => setEntidadId(e.target.value)}
+          />
+          <input
+            type="date"
+            value={fecha}
+            onChange={e => setFecha(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Usuario"
+            value={usuario}
+            onChange={e => setUsuario(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Equipo"
+            value={item}
+            onChange={e => setItem(e.target.value)}
+          />
+        </div>
         <table className="table-minimal">
           <thead>
             <tr>

@@ -11,8 +11,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'GET') {
     // filtros
-    const q      = Array.isArray(req.query.q)      ? req.query.q[0]      : req.query.q
+    const q      = Array.isArray(req.query.q) ? req.query.q[0] : req.query.q
     const estado = Array.isArray(req.query.estado) ? req.query.estado[0] : req.query.estado
+    const entidadIdRaw = Array.isArray(req.query.entidadId) ? req.query.entidadId[0] : req.query.entidadId
+    const fechaRaw     = Array.isArray(req.query.fecha)     ? req.query.fecha[0]     : req.query.fecha
+    const usuarioRaw   = Array.isArray(req.query.usuario)   ? req.query.usuario[0]   : req.query.usuario
+    const itemRaw      = Array.isArray(req.query.item)      ? req.query.item[0]      : req.query.item
 
     // baseWhere según rol
     const baseWhere = role === 'ADMIN'
@@ -23,6 +27,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const and: any[] = []
     if (q)      and.push({ item: { nombre: { contains: q, mode: 'insensitive' } } })
     if (estado) and.push({ estado })
+    if (entidadIdRaw) {
+      const id = Number(entidadIdRaw)
+      if (!isNaN(id)) and.push({ id })
+    }
+    if (fechaRaw) {
+      const date = new Date(fechaRaw)
+      if (!isNaN(date.getTime())) {
+        const next = new Date(date)
+        next.setDate(date.getDate() + 1)
+        and.push({ fechaSolicitud: { gte: date, lt: next } })
+      }
+    }
+    if (usuarioRaw) {
+      and.push({
+        usuario: {
+          OR: [
+            { nombre: { contains: usuarioRaw, mode: 'insensitive' } },
+            { apellido: { contains: usuarioRaw, mode: 'insensitive' } }
+          ]
+        }
+      })
+    }
+    if (itemRaw) {
+      and.push({ item: { nombre: { contains: itemRaw, mode: 'insensitive' } } })
+    }
 
     const where = Object.keys(baseWhere).length
       ? { AND: [ baseWhere, ...and ] }

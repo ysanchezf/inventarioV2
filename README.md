@@ -21,3 +21,14 @@ Este proyecto utiliza Next.js y Prisma. Sigue los pasos a continuacion para conf
 ## Variables de entorno
 
 Copia `.env.example` a `.env` y ajusta los valores antes de iniciar la aplicacion.
+
+## Filtros en la vista de solicitudes de administrador
+
+Desde la página **/admin/requests** los administradores pueden filtrar las solicitudes registradas. Los criterios disponibles son:
+
+- **Entidad ID**: número identificador de la solicitud.
+- **Fecha**: fecha en la que se creó la solicitud.
+- **Usuario**: nombre o apellido de quien realizó la solicitud.
+- **Equipo**: nombre del ítem solicitado.
+
+Cada cambio en los filtros recarga la lista automáticamente mostrando solo las coincidencias.

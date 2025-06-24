@@ -291,16 +291,56 @@ nav {
   10) MODALES & FORMULARIOS
    ========================================================================== */
 .modal-overlay {
-  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  animation: fade-in 0.25s ease;
+  z-index: 1000;
 }
 .modal-card,
 .form-card {
   background: var(--white);
   border-radius: var(--radius);
-  box-shadow: 0 8px 24px var(--shadow-light);
+  box-shadow: 0 16px 32px var(--shadow-light);
   padding: 2rem;
-  max-width: 400px;
+  max-width: 480px;
+  width: 100%;
   margin: auto;
+  animation: scale-in 0.25s ease;
+  overflow: hidden;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--gradient-main);
+  color: var(--white);
+  padding: 1rem;
+  margin: -2rem -2rem 1rem;
+}
+.modal-body {
+  padding: 0 0 1rem;
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.btn-icon:hover {
+  transform: scale(1.2);
 }
 .modal-body .input,
 .modal-body select,
@@ -313,6 +353,25 @@ textarea {
   border: 1px solid var(--input-border);
   border-radius: var(--radius);
   padding: 0.6rem;
+  background: var(--surface);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.3);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { transform: translateY(-20px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 /* ==========================================================================

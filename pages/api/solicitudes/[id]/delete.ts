@@ -30,8 +30,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       action: 'ELIMINAR',
       entity: 'Solicitud',
       entityId: id,
-      changes: before
-    }
+      changes: before || undefined,
+    },
   })
 
   return res.status(204).end()

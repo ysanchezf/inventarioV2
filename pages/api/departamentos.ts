@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getToken } from "next-auth/jwt";
 import { prisma } from "../../lib/prisma";
 import { DepartamentoSchema } from "../../lib/zodSchemas";
 
@@ -7,6 +8,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === "GET") {
       const deps = await prisma.departamento.findMany();
       return res.status(200).json(deps);
+    }
+
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    if (!token) {
+      return res.status(401).json({ message: "No autorizado" });
+    }
+    if ((token as any).rol !== "ADMIN") {
+      return res.status(403).json({ message: "Forbidden" });
     }
 
     if (req.method === "POST") {

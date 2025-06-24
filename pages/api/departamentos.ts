@@ -17,6 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if ((token as any).rol !== "ADMIN") {
       return res.status(403).json({ message: "Forbidden" });
     }
+    const actorId = Number(token.sub);
 
     if (req.method === "POST") {
       const data = DepartamentoSchema.parse(req.body);
@@ -27,16 +28,46 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === "PUT") {
       const { id, ...rest } = req.body;
       const data = DepartamentoSchema.partial().parse(rest);
+      const before = await prisma.departamento.findUnique({
+        where: { id: Number(id) },
+        select: { nombre: true, descripcion: true }
+      });
       const dep = await prisma.departamento.update({
         where: { id: Number(id) },
         data,
       });
+
+      await prisma.auditLog.create({
+        data: {
+          userId: actorId,
+          action: 'EDITAR',
+          entity: 'Departamento',
+          entityId: Number(id),
+          changes: { antes: before, despues: data }
+        }
+      });
+
       return res.status(200).json(dep);
     }
 
     if (req.method === "DELETE") {
       const { id } = req.query;
+      const dep = await prisma.departamento.findUnique({
+        where: { id: Number(id) },
+        select: { nombre: true }
+      });
       await prisma.departamento.delete({ where: { id: Number(id) } });
+
+      await prisma.auditLog.create({
+        data: {
+          userId: actorId,
+          action: 'ELIMINAR',
+          entity: 'Departamento',
+          entityId: Number(id),
+          changes: dep
+        }
+      });
+
       return res.status(204).end();
     }
 

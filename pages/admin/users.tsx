@@ -100,7 +100,7 @@ export default function AdminUsers({ users }: Props) {
     })
 
     const text = await res.text()
-    let data: User
+    let data: any
     try {
       data = JSON.parse(text)
     } catch {

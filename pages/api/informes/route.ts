@@ -1,7 +1,7 @@
 // app/api/informes/route.ts
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from '@/pages/api/auth/[...nextauth]/route'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { query } from '@/lib/db'
 
 // Función para convertir periodo a fecha límite

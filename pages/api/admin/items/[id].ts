@@ -17,6 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: 'ID inválido' })
   }
   const itemId = Number(id)
+  const actorId = Number(token.sub)
 
   if (req.method === 'PATCH') {
     const { nombre, descripcion, cantidadTotal, departamentoId } = req.body
@@ -24,6 +25,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Faltan campos obligatorios' })
     }
     try {
+      const before = await prisma.item.findUnique({
+        where: { id: itemId },
+        select: {
+          nombre: true,
+          descripcion: true,
+          cantidadTotal: true,
+          departamentoId: true
+        }
+      })
+
       const updated = await prisma.item.update({
         where: { id: itemId },
         data: {
@@ -34,6 +45,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           departamento: { connect: { id: Number(departamentoId) } },
         },
       })
+
+      await prisma.auditLog.create({
+        data: {
+          userId: actorId,
+          action: 'EDITAR',
+          entity: 'Item',
+          entityId: itemId,
+          changes: { antes: before, despues: { nombre, descripcion, cantidadTotal: Number(cantidadTotal), departamentoId: Number(departamentoId) } }
+        }
+      })
+
       return res.status(200).json(updated)
     } catch (err: any) {
       console.error(err)
@@ -43,7 +65,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'DELETE') {
     try {
+      const before = await prisma.item.findUnique({
+        where: { id: itemId },
+        select: { nombre: true }
+      })
+
       await prisma.item.delete({ where: { id: itemId } })
+
+      await prisma.auditLog.create({
+        data: {
+          userId: actorId,
+          action: 'ELIMINAR',
+          entity: 'Item',
+          entityId: itemId,
+          changes: before
+        }
+      })
+
       return res.status(204).end()
     } catch (err: any) {
       console.error(err)

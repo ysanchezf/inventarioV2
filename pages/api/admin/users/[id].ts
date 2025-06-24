@@ -18,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: 'ID inválido' })
   }
   const userId = Number(id)
+  const actorId = Number(token.sub)
 
   // 2) PATCH /api/admin/users/:id → editar usuario
   if (req.method === 'PATCH') {
@@ -26,6 +27,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Faltan campos obligatorios' })
     }
     try {
+      const before = await prisma.usuario.findUnique({
+        where: { id: userId },
+        select: { nombre: true, apellido: true, email: true, rol: true }
+      })
+
       const data: any = { nombre, apellido, email, rol }
       if (password) {
         data.password = await bcrypt.hash(password, 10)
@@ -42,6 +48,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           rol: true,
         },
       })
+      await prisma.auditLog.create({
+        data: {
+          userId: actorId,
+          action: 'EDITAR',
+          entity: 'Usuario',
+          entityId: userId,
+          changes: { antes: before, despues: { nombre, apellido, email, rol } }
+        }
+      })
+
       return res.status(200).json(updated)
     } catch (e: any) {
       console.error(e)
@@ -52,11 +68,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // 3) DELETE /api/admin/users/:id → eliminar usuario
   if (req.method === 'DELETE') {
     try {
+      const before = await prisma.usuario.findUnique({
+        where: { id: userId },
+        select: { nombre: true, apellido: true, email: true }
+      })
+
       await prisma.$transaction([
         prisma.solicitud.deleteMany({ where: { usuarioId: userId } }),
         prisma.auditLog.deleteMany({ where: { userId } }),
         prisma.usuario.delete({ where: { id: userId } }),
       ])
+
+      await prisma.auditLog.create({
+        data: {
+          userId: actorId,
+          action: 'ELIMINAR',
+          entity: 'Usuario',
+          entityId: userId,
+          changes: before
+        }
+      })
+
       return res.status(204).end()
     } catch (e: any) {
       console.error(e)

@@ -11,11 +11,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // autorización…
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
   if (!token) return res.status(401).json({ message: 'No autorizado' })
+  const actorId = Number(token.sub)
 
   const rawId = Array.isArray(req.query.id) ? req.query.id[0] : req.query.id
   const id     = Number(rawId)
   if (isNaN(id)) return res.status(400).json({ message: 'ID inválido' })
 
+  const before = await prisma.solicitud.findUnique({
+    where: { id },
+    select: { usuarioId: true, itemId: true }
+  })
+
   await prisma.solicitud.delete({ where: { id } })
+
+  await prisma.auditLog.create({
+    data: {
+      userId: actorId,
+      action: 'ELIMINAR',
+      entity: 'Solicitud',
+      entityId: id,
+      changes: before
+    }
+  })
+
   return res.status(204).end()
 }

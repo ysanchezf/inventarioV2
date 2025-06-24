@@ -21,8 +21,10 @@ export default function MisSolicitudes() {
   const [error, setError]         = useState<string|null>(null)
 
   // filtros
-  const [search,  setSearch]  = useState('')
-  const [estado,  setEstado]  = useState('')
+  const [search, setSearch] = useState('')      // filtros aplicados
+  const [estado, setEstado] = useState('')
+  const [searchInput, setSearchInput] = useState('') // valores del formulario
+  const [estadoInput, setEstadoInput] = useState('')
 
   useEffect(() => {
     setLoading(true)
@@ -61,12 +63,12 @@ export default function MisSolicitudes() {
           <input
             type="text"
             placeholder="Buscar equipo…"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
+            value={searchInput}
+            onChange={e => setSearchInput(e.target.value)}
           />
           <select
-            value={estado}
-            onChange={e => setEstado(e.target.value)}
+            value={estadoInput}
+            onChange={e => setEstadoInput(e.target.value)}
           >
             <option value="">Todos los estados</option>
             <option value="PENDIENTE">Pendiente</option>
@@ -74,6 +76,12 @@ export default function MisSolicitudes() {
             <option value="RECHAZADA">Rechazada</option>
             <option value="FINALIZADA">Finalizada</option>
           </select>
+          <button
+            className="btn btn-small btn-primary"
+            onClick={() => { setSearch(searchInput); setEstado(estadoInput); }}
+          >
+            Filtrar
+          </button>
         </div>
 
         {loading ? (

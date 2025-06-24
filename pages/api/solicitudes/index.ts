@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // 5) Armo condiciones adicionales
     const and: any[] = []
-    if (q)      and.push({ item: { nombre: { contains: q, mode: 'insensitive' } } })
+    if (q)      and.push({ item: { nombre: { contains: q } } })
     if (estado) and.push({ estado })
 
     // 6) Combino todo

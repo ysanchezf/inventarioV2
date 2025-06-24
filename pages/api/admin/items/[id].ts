@@ -78,8 +78,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           action: 'ELIMINAR',
           entity: 'Item',
           entityId: itemId,
-          changes: before
-        }
+          changes: before || undefined,
+        },
       })
 
       return res.status(204).end()

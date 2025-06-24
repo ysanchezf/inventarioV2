@@ -1,11 +1,11 @@
 // pages/api/auth/[...nextauth].ts
-import NextAuth from 'next-auth'
+import NextAuth, { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import bcrypt from 'bcrypt'
 import { prisma } from '../../../lib/prisma'
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   pages: { signIn: '/auth/signin' },
   session: { strategy: 'jwt' },
@@ -60,4 +60,6 @@ export default NextAuth({
   // NEXTAUTH_URL=http://localhost:3000
   // NEXTAUTH_SECRET=<una cadena larga de tu elección>
   secret: process.env.NEXTAUTH_SECRET,
-})
+}
+
+export default NextAuth(authOptions)

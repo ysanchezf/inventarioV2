@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getToken } from 'next-auth/jwt'
 import { prisma } from '../../../../lib/prisma'
 import { sendStatusEmail } from '../../../../lib/mailer'
+import type { Prisma } from '@prisma/client'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'PATCH') {
@@ -48,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // 4) Transacción: opcional decremento stock, actualización + audit log
-  const tx: Array<Promise<any>> = []
+  const tx: Array<Prisma.PrismaPromise<any>> = []
   if (estado === 'APROBADA') {
     tx.push(
       prisma.item.update({

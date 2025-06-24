@@ -316,6 +316,7 @@ export default function InformesPage() {
                       reportData={{
                         equipos: reportData.equipos ?? [],
                         usuarios: reportData.usuarios ?? [],
+                        meta: reportData.meta,
                       }}
                       periodo={periodoTiempo}
                       tipoInforme={tipoInforme}

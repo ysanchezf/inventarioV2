@@ -13,6 +13,7 @@ module.exports = {
         __dirname,
         'node_modules/use-sync-external-store/shim/index.js'
       ),
+      '@': path.resolve(__dirname),
     };
     return config;
   },

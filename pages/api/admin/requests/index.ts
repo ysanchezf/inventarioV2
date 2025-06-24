@@ -43,14 +43,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       and.push({
         usuario: {
           OR: [
+
+            { nombre: { contains: usuarioRaw, mode: 'insensitive' } },
+            { apellido: { contains: usuarioRaw, mode: 'insensitive' } }
+
             { nombre: { contains: usuarioRaw } },
             { apellido: { contains: usuarioRaw } }
+
           ]
         }
       })
     }
     if (itemRaw) {
+
+      and.push({ item: { nombre: { contains: itemRaw, mode: 'insensitive' } } })
+
       and.push({ item: { nombre: { contains: itemRaw } } })
+
     }
 
     const where = Object.keys(baseWhere).length

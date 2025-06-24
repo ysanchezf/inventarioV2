@@ -27,7 +27,7 @@ export default function MisSolicitudes() {
   useEffect(() => {
     setLoading(true)
     const params = new URLSearchParams()
-    if (search)  params.set('search', search)
+    if (search)  params.set('q', search)
     if (estado)  params.set('estado', estado)
 
     fetch(`/api/solicitudes?${params.toString()}`, { credentials: 'include' })

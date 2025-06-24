@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getToken } from 'next-auth/jwt'
 import bcrypt from 'bcrypt'
+import { Prisma } from '@prisma/client'
 import { prisma } from '../../../../lib/prisma'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -51,10 +52,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // 3) DELETE /api/admin/users/:id → eliminar usuario
   if (req.method === 'DELETE') {
     try {
-      await prisma.usuario.delete({ where: { id: userId } })
+      await prisma.$transaction([
+        prisma.solicitud.deleteMany({ where: { usuarioId: userId } }),
+        prisma.auditLog.deleteMany({ where: { userId } }),
+        prisma.usuario.delete({ where: { id: userId } }),
+      ])
       return res.status(204).end()
     } catch (e: any) {
       console.error(e)
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        return res
+          .status(409)
+          .json({ message: 'Error al eliminar usuario' })
+      }
       return res.status(500).json({ message: 'Error al eliminar usuario' })
     }
   }

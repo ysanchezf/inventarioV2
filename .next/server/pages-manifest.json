@@ -2,9 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
   "/auth/signin": "pages/auth/signin.js",
-  "/admin": "pages/admin.js",
-  "/admin/audit": "pages/admin/audit.js"
+  "/admin/requests": "pages/admin/requests.js",
+  "/api/admin/requests": "pages/api/admin/requests.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js"
 }

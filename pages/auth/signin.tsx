@@ -1,5 +1,6 @@
 // pages/auth/signin.tsx
 import { useState, FormEvent } from 'react'
+import { FiLogIn } from 'react-icons/fi'
 import { getCsrfToken, signIn, getSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -68,8 +69,8 @@ export default function SignIn({ csrfToken, confirmed }: Props) {
             required
           />
         </div>
-        <button type="submit" className="button primary large full-width">
-          Iniciar Sesión
+        <button type="submit" className="button primary large full-width signin-btn">
+          <FiLogIn /> Iniciar Sesión
         </button>
         <Link href="/auth/forgot-password" className="button secondary large full-width">
           Olvidé mi contraseña

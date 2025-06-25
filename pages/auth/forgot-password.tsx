@@ -1,6 +1,7 @@
 // pages/auth/forgot-password.tsx
 import { useState } from 'react'
 import Link from 'next/link'
+import { FiLogIn } from 'react-icons/fi'
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
@@ -31,8 +32,8 @@ export default function ForgotPassword() {
       <main className="register-page">
         <h2>Recuperar contraseña</h2>
         <p className="subheading">{message}</p>
-        <Link href="/auth/signin" className="button primary">
-          Iniciar Sesión
+        <Link href="/auth/signin" className="button primary signin-btn">
+          <FiLogIn /> Iniciar Sesión
         </Link>
       </main>
     )
@@ -56,8 +57,8 @@ export default function ForgotPassword() {
           {submitting ? 'Enviando...' : 'Enviar'}
         </button>
         <div className="divider">¿Ya recordaste?</div>
-        <Link href="/auth/signin" className="button secondary large full-width">
-          Iniciar Sesión
+        <Link href="/auth/signin" className="button secondary large full-width signin-btn">
+          <FiLogIn /> Iniciar Sesión
         </Link>
       </form>
     </main>

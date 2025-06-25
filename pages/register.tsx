@@ -1,6 +1,7 @@
 // pages/register.tsx
 import { useState } from 'react';
 import Link from 'next/link';
+import { FiLogIn } from 'react-icons/fi';
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -56,8 +57,8 @@ export default function Register() {
       <main className="register-page">
         <h2>¡Registro exitoso!</h2>
         <p className="subheading">{submittedMessage}</p>
-        <Link href="/auth/signin" className="button primary">
-          Ir a Iniciar Sesión
+        <Link href="/auth/signin" className="button primary signin-btn">
+          <FiLogIn /> Ir a Iniciar Sesión
         </Link>
       </main>
     );
@@ -149,8 +150,8 @@ export default function Register() {
         </button>
 
         <div className="divider">¿Ya tienes cuenta?</div>
-        <Link href="/auth/signin" className="button secondary large full-width">
-          Iniciar Sesión
+        <Link href="/auth/signin" className="button secondary large full-width signin-btn">
+          <FiLogIn /> Iniciar Sesión
         </Link>
       </form>
     </main>

@@ -13,25 +13,25 @@ generator erd {
   format   = "svg" // puedes usar svg o png
 }
 
-
 model Usuario {
-  id             Int         @id @default(autoincrement())
-  matricula      String      @unique
-  email          String      @unique
-  nombre         String
-  apellido       String
-  password       String
-  confirmed      Boolean     @default(false)
-  rol            Rol         @default(USER)
-  solicitudes    Solicitud[]
-  auditLogs      AuditLog[]  // Relación inversa para logs de este usuario
+  id                  Int                  @id @default(autoincrement())
+  matricula           String               @unique
+  email               String               @unique
+  nombre              String
+  apellido            String
+  password            String
+  confirmed           Boolean              @default(false)
+  rol                 Rol                  @default(USER)
+  solicitudes         Solicitud[]
+  auditLogs           AuditLog[] // Relación inversa para logs de este usuario
+  passwordResetTokens PasswordResetToken[]
 
   // Campos para asignar departamento
-  departamentoId Int?        // ← añadido
+  departamentoId Int? // ← añadido
   departamento   Departamento? @relation(fields: [departamentoId], references: [id]) // ← añadido
 
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Rol {
@@ -40,16 +40,16 @@ enum Rol {
 }
 
 model Departamento {
-  id          Int       @id @default(autoincrement())
-  nombre      String    @unique
+  id          Int     @id @default(autoincrement())
+  nombre      String  @unique
   descripcion String?
   items       Item[]
-  
-  // Relación inversa para usuarios asignados
-  usuarios    Usuario[] // ← añadido
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  // Relación inversa para usuarios asignados
+  usuarios Usuario[] // ← añadido
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Item {
@@ -88,7 +88,7 @@ model Solicitud {
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   deleted        Boolean         @default(false)
-  deletedAt      DateTime? 
+  deletedAt      DateTime?
 }
 
 enum EstadoSolicitud {

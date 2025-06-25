@@ -6,6 +6,7 @@ import Link from 'next/link'
 export default function ResetPassword() {
   const router = useRouter()
   const { token } = router.query
+  const tokenParam = typeof token === 'string' ? token : token?.[0]
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [message, setMessage] = useState<string | null>(null)
@@ -23,7 +24,7 @@ export default function ResetPassword() {
     const res = await fetch('/api/auth/reset-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token, password, confirmPassword: confirm }),
+      body: JSON.stringify({ token: tokenParam, password, confirmPassword: confirm }),
     })
     const data = await res.json()
     setSubmitting(false)
@@ -32,6 +33,20 @@ export default function ResetPassword() {
     } else {
       setMessage('Contraseña actualizada. Ya puedes iniciar sesión.')
     }
+  }
+
+  if (!tokenParam && router.isReady) {
+    return (
+      <main className="register-page">
+        <h2>Cambiar contraseña</h2>
+        <p className="subheading">
+          El enlace de recuperación no es válido o ha expirado.
+        </p>
+        <Link href="/auth/forgot-password" className="button primary">
+          Solicitar nuevo enlace
+        </Link>
+      </main>
+    )
   }
 
   if (message) {

@@ -97,7 +97,7 @@ export default function Layout({ children }: Props) {
           </div>
         </header>
       )}
-      <main>{children}</main>
+      <main className="main-content">{children}</main>
       <footer>
         <div className="app-container footer-flex">
           <span>© {new Date().getFullYear()} UNPHU – Inventario</span>

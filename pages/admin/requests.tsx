@@ -54,9 +54,8 @@ export default function AdminRequestsPage() {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
 
-  }, [entidadId, fecha, usuario, item])
+}, [entidadId, fecha, usuario, item, search, estado])
 
-  }, [search, estado])
 
 
   // 2) Aprobar/Rechazar con comentario

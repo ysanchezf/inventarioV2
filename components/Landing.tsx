@@ -1,7 +1,7 @@
 // components/Landing.tsx
 import React from 'react';
 import Link from 'next/link';
-import { FiBox, FiClipboard, FiCheckSquare } from 'react-icons/fi';
+import { FiBox, FiClipboard, FiCheckSquare, FiLogIn } from 'react-icons/fi';
 
 export default function Landing() {
   return (
@@ -23,8 +23,8 @@ export default function Landing() {
           {/* Botones a la derecha */}
           <div>
             {/* <Link> ya genera un <a> internamente, por eso quitamos el <a> extra */}
-            <Link href="/auth/signin" className="button primary" style={{ marginRight: '0.75rem' }}>
-              Iniciar Sesión
+            <Link href="/auth/signin" className="button primary signin-btn" style={{ marginRight: '0.75rem' }}>
+              <FiLogIn /> Iniciar Sesión
             </Link>
             <Link href="/register" className="button secondary">
               Registrarse
@@ -41,8 +41,8 @@ export default function Landing() {
           audiovisuales de la universidad.
         </p>
         <div className="hero-buttons">
-          <Link href="/auth/signin" className="button primary large">
-            Iniciar Sesión
+          <Link href="/auth/signin" className="button primary large signin-btn">
+            <FiLogIn /> Iniciar Sesión
           </Link>
           <Link href="/register" className="button secondary large">
             Registrarse

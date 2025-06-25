@@ -71,6 +71,9 @@ export default function SignIn({ csrfToken, confirmed }: Props) {
         <button type="submit" className="button primary large full-width">
           Iniciar Sesión
         </button>
+        <Link href="/auth/forgot-password" className="button secondary large full-width">
+          Olvidé mi contraseña
+        </Link>
         <div className="divider">¿No tienes cuenta?</div>
         <Link href="/register" className="button secondary large full-width">
           Registrarse

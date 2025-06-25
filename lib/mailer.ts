@@ -79,3 +79,27 @@ export async function sendReturnEmail(
     html,
   })
 }
+
+/**
+ * Envía el enlace para restablecer contraseña.
+ */
+export async function sendPasswordResetEmail(to: string, token: string) {
+  const url = `${process.env.NEXTAUTH_URL}/auth/reset-password?token=${encodeURIComponent(
+    token
+  )}`
+
+  const info = await transporter.sendMail({
+    from: process.env.EMAIL_FROM!,
+    to,
+    subject: 'Restablece tu contraseña',
+    html: `
+      <p>Has solicitado cambiar tu contraseña.</p>
+      <p>Haz clic en el siguiente enlace para continuar:</p>
+      <p><a href="${url}">Cambiar contraseña</a></p>
+      <p>Si no fuiste tú, ignora este mensaje.</p>
+    `,
+  })
+
+  const preview = nodemailer.getTestMessageUrl(info)
+  if (preview) console.log('💌 Preview URL:', preview)
+}

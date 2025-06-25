@@ -110,3 +110,12 @@ model AuditLog {
 
   @@index([entity, entityId])
 }
+
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      Usuario  @relation(fields: [userId], references: [id])
+  expires   DateTime
+  createdAt DateTime @default(now())
+}

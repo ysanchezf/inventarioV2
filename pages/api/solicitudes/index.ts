@@ -31,6 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const and: any[] = []
     if (q)      and.push({ item: { nombre: { contains: q } } })
     if (estado) and.push({ estado })
+    and.push({ deleted: false })
 
     // 6) Combino todo
     const where = {

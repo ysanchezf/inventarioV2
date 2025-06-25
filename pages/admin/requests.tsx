@@ -51,7 +51,8 @@ export default function AdminRequestsPage() {
       .finally(() => setLoading(false))
 
 
-  }, [fecha, usuario, item, search])
+
+}, [entidadId, fecha, usuario, item, search, estado])
 
   // 2) Aprobar/Rechazar con comentario
   const handleUpdate = async (
@@ -128,7 +129,6 @@ export default function AdminRequestsPage() {
             value={item}
             onChange={e => setItem(e.target.value)}
           />
-        </div>
 
         {/* —————— FILTROS —————— */}
         <div style={{ display:'flex', gap:'.5rem', marginBottom:'1rem' }}>
@@ -187,7 +187,6 @@ export default function AdminRequestsPage() {
               </div>
             </div>
           ))}
-
         </div>
         {/* close filtros container */}
         </div>

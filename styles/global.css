@@ -70,7 +70,6 @@ header {
   z-index: 100;
 }
 
-/* Usamos .header-flex para que el contenido interno esté bien alineado */
 .header-flex {
   display: flex;
   align-items: center;
@@ -78,7 +77,6 @@ header {
   padding: 0.75rem 1rem;
 }
 
-/* Logo (izquierda) */
 .logo {
   font-size: 1.75rem;
   font-weight: 700;
@@ -87,10 +85,9 @@ header {
   flex-shrink: 0;
 }
 
-/* Navegación (centro) */
 nav {
   flex: 1;
-  margin: 0 2rem; /* espacio a izquierda y derecha del nav */
+  margin: 0 2rem;
 }
 .nav-list {
   display: flex;
@@ -113,7 +110,6 @@ nav {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Sesión (derecha) */
 .session-info {
   display: flex;
   gap: 1rem;
@@ -179,7 +175,14 @@ nav {
   transform: translateY(-3px) scale(1.02);
 }
 
-/* Estilo especial para botones de inicio de sesión */
+.button.full-width {
+  width: 100%;
+}
+.button.large {
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+}
+
 .button.signin-btn {
   position: relative;
   overflow: hidden;
@@ -356,7 +359,6 @@ nav {
   transform: translateY(-2px);
 }
 
-/* Animación para resaltar filas actualizadas */
 .row-highlight td {
   animation: row-highlight 2s ease-out;
 }
@@ -370,7 +372,7 @@ nav {
 }
 
 /* ==========================================================================
-  10) MODALES & FORMULARIOS
+   10) MODALES & FORMULARIOS
    ========================================================================== */
 .modal-overlay {
   position: fixed;
@@ -457,7 +459,7 @@ textarea:focus {
 }
 
 /* ==========================================================================
-  11) PÁGINA DE REGISTRO
+   11) PÁGINA DE REGISTRO
    ========================================================================== */
 .register-page {
   background: #eaf6f1;

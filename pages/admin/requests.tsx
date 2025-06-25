@@ -50,8 +50,8 @@ export default function AdminRequestsPage() {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
 
-  }, [fecha, usuario, item, search])
 
+  }, [fecha, usuario, item, search])
 
   // 2) Aprobar/Rechazar con comentario
   const handleUpdate = async (
@@ -187,6 +187,9 @@ export default function AdminRequestsPage() {
               </div>
             </div>
           ))}
+
+        </div>
+        {/* close filtros container */}
         </div>
       </section>
     </Layout>

@@ -218,6 +218,8 @@ export default function AdminRequestsPage() {
             ))}
           </tbody>
         </table>
+        {/* close filtros container */}
+        </div>
       </section>
     </Layout>
   )

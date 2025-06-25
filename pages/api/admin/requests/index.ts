@@ -45,10 +45,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           OR: [
 
             { nombre: { contains: usuarioRaw, mode: 'insensitive' } },
-            { apellido: { contains: usuarioRaw, mode: 'insensitive' } }
+            { apellido: { contains: usuarioRaw, mode: 'insensitive' } },
 
             { nombre: { contains: usuarioRaw } },
-            { apellido: { contains: usuarioRaw } }
+            { apellido: { contains: usuarioRaw } },
 
           ]
         }

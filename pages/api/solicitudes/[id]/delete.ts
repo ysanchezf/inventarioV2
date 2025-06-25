@@ -22,7 +22,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     select: { usuarioId: true, itemId: true }
   })
 
-  await prisma.solicitud.delete({ where: { id } })
+  await prisma.solicitud.update({
+    where: { id },
+    data: { deleted: true, deletedAt: new Date() }
+  })
 
   await prisma.auditLog.create({
     data: {

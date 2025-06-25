@@ -42,11 +42,4 @@
   "prisma": {
     "seed": "node prisma/seed.js"
   }
-  "scripts": {
-  "start": "node index.js",           // o el archivo principal de tu app
-  "dev": "nodemon index.js",          // si usas nodemon
-  "build": "prisma generate",         // opcional
-  "postinstall": "prisma generate"    // importante para Render
-}
-
-}
+ }

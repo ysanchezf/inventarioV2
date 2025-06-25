@@ -50,8 +50,9 @@ export default function AdminRequestsPage() {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
 
-  }, [fecha, usuario, item, search])
 
+
+}, [entidadId, fecha, usuario, item, search, estado])
 
   // 2) Aprobar/Rechazar con comentario
   const handleUpdate = async (

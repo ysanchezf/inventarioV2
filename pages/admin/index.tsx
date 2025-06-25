@@ -22,14 +22,6 @@ export default function AdminDashboard({ name }: Props) {
         <h2>¡Bienvenido, {name}!</h2>
         <p style={{ color: '#555' }}>Panel de Administración</p>
       </section>
-<section className="app-container" style={{ padding: '1rem 0' }}>
-        <button
-          className="btn-primary"
-          onClick={() => window.open('/api/report')}
-        >
-          Descargar Reporte PDF
-        </button>
-      </section>
       <section className="features">
         <Link href="/admin/requests" className="card-wrapper">
           <div className="card">

@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { FiLogIn } from 'react-icons/fi'
 
 export default function ResetPassword() {
   const router = useRouter()
@@ -54,8 +55,8 @@ export default function ResetPassword() {
       <main className="register-page">
         <h2>Cambiar contraseña</h2>
         <p className="subheading">{message}</p>
-        <Link href="/auth/signin" className="button primary">
-          Iniciar Sesión
+        <Link href="/auth/signin" className="button primary signin-btn">
+          <FiLogIn /> Iniciar Sesión
         </Link>
       </main>
     )

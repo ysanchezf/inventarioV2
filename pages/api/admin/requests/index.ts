@@ -87,6 +87,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       fechaSolicitud: s.fechaSolicitud.toISOString(),
       item:           { nombre: s.item.nombre, departamento: s.item.departamento.nombre },
       usuario:        { nombre: s.usuario.nombre, apellido: s.usuario.apellido, email: s.usuario.email },
+      comentarios:    s.comentarios,
     }))
     return res.status(200).json(solicitudes)
   }

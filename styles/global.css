@@ -30,6 +30,8 @@
   --font-main: 'Inter', system-ui, sans-serif;
   --gradient-main: linear-gradient(90deg, var(--primary), var(--accent));
   --hero-bg: linear-gradient(180deg, #ffffff 0%, #eaf6f1 100%);
+  --header-height: 4rem;
+  --footer-height: 3rem;
 }
 
 /* ==========================================================================
@@ -61,8 +63,10 @@ body {
 header {
   background: var(--gradient-main);
   color: var(--white);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 100;
 }
 
@@ -460,11 +464,21 @@ footer {
   color: var(--white);
   width: 100%;
   padding: 0.75rem 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 .footer-flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: var(--footer-height);
+}
+
+.main-content {
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  padding-top: var(--header-height);
+  padding-bottom: var(--footer-height);
 }
 
 /* ==========================================================================

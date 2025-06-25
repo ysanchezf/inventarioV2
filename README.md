@@ -8,13 +8,14 @@ Este proyecto utiliza Next.js y Prisma. Sigue los pasos a continuacion para conf
    ```bash
    npm install
    ```
-2. Genera el cliente de Prisma:
+2. Aplica la migración `add_password_reset_token` y genera el cliente de Prisma:
    ```bash
+   npx prisma migrate dev
+   # si la migración ya está aplicada puedes solo generar el cliente con:
    npx prisma generate
    ```
-3. Ejecuta las migraciones (si existen) y levanta el servidor de desarrollo:
+3. Levanta el servidor de desarrollo:
    ```bash
-   npx prisma migrate dev # opcional si hay migraciones pendientes
    npm run dev
    ```
 

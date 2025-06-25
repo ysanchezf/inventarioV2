@@ -20,16 +20,13 @@ export default function AdminRequestsPage() {
   const [error, setError] = useState<string|null>(null)
 
   // criterios de filtrado
-  const [entidadId, setEntidadId] = useState('')
   const [fecha, setFecha] = useState('')
   const [usuario, setUsuario] = useState('')
   const [item, setItem] = useState('')
 
-  // filtros por item y estado
+  // filtro por equipo
   const [search, setSearch] = useState('')      // filtros aplicados
-  const [estado, setEstado] = useState('')
-  const [searchInput, setSearchInput] = useState('') // valores del formulario
-  const [estadoInput, setEstadoInput] = useState('')
+  const [searchInput, setSearchInput] = useState('') // valor del formulario
 
 
   // 1) Carga con filtros
@@ -37,13 +34,12 @@ export default function AdminRequestsPage() {
     setLoading(true)
     const params = new URLSearchParams()
 
-    if (entidadId) params.set('entidadId', entidadId)
     if (fecha)     params.set('fecha', fecha)
     if (usuario)   params.set('usuario', usuario)
     if (item)      params.set('item', item)
 
     if (search) params.set('q', search)
-    if (estado) params.set('estado', estado)
+
 
     fetch(`/api/admin/requests?${params.toString()}`, { credentials: 'include' })
       .then((res) => {
@@ -54,7 +50,7 @@ export default function AdminRequestsPage() {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
 
-  }, [entidadId, fecha, usuario, item, search, estado])
+  }, [fecha, usuario, item, search])
 
 
   // 2) Aprobar/Rechazar con comentario
@@ -116,12 +112,6 @@ export default function AdminRequestsPage() {
 
         <div style={{ display: 'flex', gap: '.5rem', marginBottom: '1rem' }}>
           <input
-            type="number"
-            placeholder="Entidad ID"
-            value={entidadId}
-            onChange={e => setEntidadId(e.target.value)}
-          />
-          <input
             type="date"
             value={fecha}
             onChange={e => setFecha(e.target.value)}
@@ -138,6 +128,7 @@ export default function AdminRequestsPage() {
             value={item}
             onChange={e => setItem(e.target.value)}
           />
+        </div>
 
         {/* —————— FILTROS —————— */}
         <div style={{ display:'flex', gap:'.5rem', marginBottom:'1rem' }}>
@@ -147,78 +138,55 @@ export default function AdminRequestsPage() {
             value={searchInput}
             onChange={e => setSearchInput(e.target.value)}
           />
-          <select
-            value={estadoInput}
-            onChange={e => setEstadoInput(e.target.value)}
-          >
-            <option value="">Todos los estados</option>
-            <option value="PENDIENTE">Pendiente</option>
-            <option value="APROBADA">Aprobada</option>
-            <option value="RECHAZADA">Rechazada</option>
-            <option value="FINALIZADA">Finalizada</option>
-          </select>
           <button
             className="btn btn-small btn-primary"
-            onClick={() => { setSearch(searchInput); setEstado(estadoInput); }}
+            onClick={() => setSearch(searchInput)}
           >
             Filtrar
           </button>
 
         </div>
-        <table className="table-minimal">
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Usuario</th>
-              <th>Equipo</th>
-              <th>Motivo</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {solicitudes.map((s) => (
-              <tr key={s.id}>
-                <td>{new Date(s.fechaSolicitud).toLocaleDateString()}</td>
-                <td>{s.usuario.nombre}</td>
-                <td>{s.item.nombre}</td>
-                <td>{s.motivo}</td>
-                <td>{s.estado}</td>
-                <td>
-                  {s.estado === 'PENDIENTE' && (
-                    <>
-                      <button
-                        className="btn btn-primary btn-small"
-                        onClick={() => handleUpdate(s.id, 'APROBADA')}
-                      >
-                        <FiCheckCircle size={14} /> Aprobar
-                      </button>
-                      {' '}
-                      <button
-                        className="btn btn-secondary btn-small"
-                        onClick={() => handleUpdate(s.id, 'RECHAZADA')}
-                      >
-                        <FiXCircle size={14} /> Rechazar
-                      </button>
-                    </>
-                  )}
-                  {s.estado === 'APROBADA' && (
+        <div className="requests-grid">
+          {solicitudes.map((s) => (
+            <div key={s.id} className="request-card">
+              <div className="request-card-header">
+                <span className={`status-badge ${s.estado.toLowerCase()}`}>{s.estado}</span>
+                <span>{new Date(s.fechaSolicitud).toLocaleDateString()}</span>
+              </div>
+              <h4>{s.item.nombre}</h4>
+              <p className="request-user">{s.usuario.nombre}</p>
+              <p>{s.motivo}</p>
+              <div className="actions">
+                {s.estado === 'PENDIENTE' && (
+                  <>
                     <button
                       className="btn btn-primary btn-small"
-                      style={{ marginLeft: '0.5rem' }}
-                      onClick={() => handleDeliver(s.id)}
+                      onClick={() => handleUpdate(s.id, 'APROBADA')}
                     >
-                      Marcar entregado
+                      <FiCheckCircle size={14} /> Aprobar
                     </button>
-                  )}
-                  {s.estado === 'FINALIZADA' && <span>Finalizada</span>}
-                  {s.estado === 'RECHAZADA'  && <span>Rechazada</span>}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {/* close filtros container */}
+                    {' '}
+                    <button
+                      className="btn btn-secondary btn-small"
+                      onClick={() => handleUpdate(s.id, 'RECHAZADA')}
+                    >
+                      <FiXCircle size={14} /> Rechazar
+                    </button>
+                  </>
+                )}
+                {s.estado === 'APROBADA' && (
+                  <button
+                    className="btn btn-primary btn-small"
+                    onClick={() => handleDeliver(s.id)}
+                  >
+                    Marcar entregado
+                  </button>
+                )}
+                {s.estado === 'FINALIZADA' && <span>Finalizada</span>}
+                {s.estado === 'RECHAZADA' && <span>Rechazada</span>}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </Layout>

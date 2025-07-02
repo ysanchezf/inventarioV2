@@ -6,19 +6,26 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // El correo de confirmación envía la matrícula como "token"
   const { token } = req.query
   if (typeof token !== 'string') {
-    return res.status(400).send('Matrícula inválida')
+    return res.status(400).send('Token inválido')
   }
   try {
+    const record = await prisma.emailVerificationToken.findUnique({
+      where: { token },
+    })
+    if (!record || record.expires < new Date()) {
+      return res.status(400).send('Token inválido o expirado')
+    }
+
     await prisma.usuario.update({
-      where: { matricula: token },
+      where: { id: record.userId },
       data: { confirmed: true },
-    });
-    return res.redirect('/auth/signin?confirmed=1');
+    })
+    await prisma.emailVerificationToken.delete({ where: { id: record.id } })
+    return res.redirect('/auth/signin?confirmed=1')
   } catch (err) {
-    console.error('Error confirmando usuario:', err);
-    return res.status(500).send('No fue posible confirmar tu cuenta');
+    console.error('Error confirmando usuario:', err)
+    return res.status(500).send('No fue posible confirmar tu cuenta')
   }
 }

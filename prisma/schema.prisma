@@ -14,17 +14,18 @@ generator erd {
 }
 
 model Usuario {
-  id                  Int                  @id @default(autoincrement())
-  matricula           String               @unique
-  email               String               @unique
-  nombre              String
-  apellido            String
-  password            String
-  confirmed           Boolean              @default(false)
-  rol                 Rol                  @default(USER)
-  solicitudes         Solicitud[]
-  auditLogs           AuditLog[] // Relación inversa para logs de este usuario
-  passwordResetTokens PasswordResetToken[]
+  id                      Int                      @id @default(autoincrement())
+  matricula               String                   @unique
+  email                   String                   @unique
+  nombre                  String
+  apellido                String
+  password                String
+  confirmed               Boolean                  @default(false)
+  rol                     Rol                      @default(USER)
+  solicitudes             Solicitud[]
+  auditLogs               AuditLog[] // Relación inversa para logs de este usuario
+  passwordResetTokens     PasswordResetToken[]
+  emailVerificationTokens EmailVerificationToken[]
 
   // Campos para asignar departamento
   departamentoId Int? // ← añadido
@@ -112,6 +113,15 @@ model AuditLog {
 }
 
 model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires   DateTime
+  createdAt DateTime @default(now())
+}
+
+model EmailVerificationToken {
   id        Int      @id @default(autoincrement())
   token     String   @unique
   userId    Int

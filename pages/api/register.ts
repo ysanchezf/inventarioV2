@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcrypt';
 import { prisma } from '../../lib/prisma';
 import { sendConfirmationEmail } from '../../lib/mailer';
+import { randomBytes } from 'crypto';
 
 type Data = { message: string };
 
@@ -41,10 +42,21 @@ export default async function handler(
       },
     });
 
+    const token = randomBytes(32).toString('hex');
+    const expires = new Date(Date.now() + 1000 * 60 * 60 * 24);
+    await prisma.emailVerificationToken.create({
+      data: {
+        token,
+        userId: user.id,
+        expires,
+      },
+    });
+
     // Envío obligatorio de correo; si falla hacemos rollback
     try {
-      await sendConfirmationEmail(user.email, user.nombre, user.matricula);
+      await sendConfirmationEmail(user.email, user.nombre, token);
     } catch (mailErr) {
+      await prisma.emailVerificationToken.deleteMany({ where: { userId: user.id } });
       await prisma.usuario.delete({ where: { id: user.id } });
       console.error('Error al enviar correo:', mailErr);
       return res.status(500).json({

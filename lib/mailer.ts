@@ -16,10 +16,10 @@ export const transporter = nodemailer.createTransport({
 export async function sendConfirmationEmail(
   email: string,
   nombre: string,
-  matricula: string
+  token: string
 ) {
   const confirmUrl = `${process.env.NEXTAUTH_URL}/api/confirm?token=${encodeURIComponent(
-    matricula
+    token
   )}`
 
   const info = await transporter.sendMail({

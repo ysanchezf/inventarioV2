@@ -1,6 +1,7 @@
 // pages/_app.tsx
 import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
 import '../styles/global.css'
@@ -15,6 +16,9 @@ export default function App({
   return (
     // 2) Proveedor de sesión de NextAuth
     <SessionProvider session={session}>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       {/* 3) Proveedor de React Query */}
       <QueryClientProvider client={queryClient}>
         {/* 4) Renderiza la página */}

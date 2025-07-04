@@ -33,11 +33,15 @@ export function CustomPrismaAdapter(prisma: PrismaClient): Adapter {
       })
 
       return {
-        id: user.id.toString(),
+        // Return the numeric id directly instead of casting to a string.
+        // The object is later cast to `AdapterUser`, which expects `id` to be
+        // a string, but keeping it as a number avoids issues when other
+        // adapter methods (e.g. linkAccount) expect an integer.
+        id: user.id,
         name: data.name ?? null,
         email: user.email,
         emailVerified: null,
-      } as AdapterUser
+      } as unknown as AdapterUser
     },
   }
 }

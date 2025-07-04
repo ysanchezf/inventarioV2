@@ -35,11 +35,13 @@ export const authOptions: NextAuthOptions = {
 
         // 👉 Devuelve el campo "rol" (no "role")
         return {
-          id: user.id.toString(),
+          // Keep the numeric id so other adapter methods receive a number
+          // instead of a string.
+          id: user.id,
           name: `${user.nombre} ${user.apellido}`,
           email: user.email,
           rol: user.rol,
-        }
+        } as any
       },
     }),
     GoogleProvider({

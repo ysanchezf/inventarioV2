@@ -75,7 +75,9 @@ export default function SignIn({ csrfToken, confirmed }: Props) {
         <button
           type="button"
           className="button secondary large full-width"
-          onClick={() => signIn('google', { prompt: 'select_account' })}
+          onClick={() =>
+            signIn('google', { callbackUrl: '/', prompt: 'select_account' })
+          }
         >
           Iniciar con Google
         </button>

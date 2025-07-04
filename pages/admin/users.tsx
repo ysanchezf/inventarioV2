@@ -296,7 +296,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
     return { redirect: { destination: '/', permanent: false } }
   }
   const { prisma } = await import('../../lib/prisma')
-  const users = await prisma.usuario.findMany({
+  const users = await prisma.user.findMany({
     select: {
       id: true,
       matricula: true,

@@ -152,7 +152,7 @@ export default function Register() {
         <button
           type="button"
           className="button secondary large full-width"
-          onClick={() => signIn('google')}
+          onClick={() => signIn('google', { prompt: 'select_account' })}
         >
           Registrarse con Google
         </button>

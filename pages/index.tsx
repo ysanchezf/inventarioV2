@@ -103,7 +103,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
   }
 
   // Buscamos el usuario
-  const user = await prisma.usuario.findUnique({
+  const user = await prisma.user.findUnique({
     where: { email: session.user.email },
   })
   if (!user) {

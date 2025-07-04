@@ -75,7 +75,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
   const { prisma } = await import('../../lib/prisma')
 
   // 3) Obtenemos el nombre para el saludo
-  const user = await prisma.usuario.findUnique({
+  const user = await prisma.user.findUnique({
     where: { email: session.user.email! },
   })
   if (!user) {

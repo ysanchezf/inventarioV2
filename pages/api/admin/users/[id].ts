@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Faltan campos obligatorios' })
     }
     try {
-      const before = await prisma.usuario.findUnique({
+      const before = await prisma.user.findUnique({
         where: { id: userId },
         select: { nombre: true, apellido: true, email: true, rol: true }
       })
@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (password) {
         data.password = await bcrypt.hash(password, 10)
       }
-      const updated = await prisma.usuario.update({
+      const updated = await prisma.user.update({
         where: { id: userId },
         data,
         select: {
@@ -68,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // 3) DELETE /api/admin/users/:id → eliminar usuario
   if (req.method === 'DELETE') {
     try {
-      const before = await prisma.usuario.findUnique({
+      const before = await prisma.user.findUnique({
         where: { id: userId },
         select: { nombre: true, apellido: true, email: true }
       })
@@ -76,7 +76,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await prisma.$transaction([
         prisma.solicitud.deleteMany({ where: { usuarioId: userId } }),
         prisma.auditLog.deleteMany({ where: { userId } }),
-        prisma.usuario.delete({ where: { id: userId } }),
+        prisma.user.delete({ where: { id: userId } }),
       ])
 
       await prisma.auditLog.create({

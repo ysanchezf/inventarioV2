@@ -25,13 +25,13 @@ export default async function handler(
   }
 
   try {
-    const exists = await prisma.usuario.findUnique({ where: { matricula } });
+    const exists = await prisma.user.findUnique({ where: { matricula } });
     if (exists) {
       return res.status(400).json({ message: 'Matrícula ya registrada' });
     }
 
     const hashed = await bcrypt.hash(password, 10);
-    const user = await prisma.usuario.create({
+    const user = await prisma.user.create({
       data: {
         matricula,
         email: `${matricula}@unphu.edu.do`,
@@ -57,7 +57,7 @@ export default async function handler(
       await sendConfirmationEmail(user.email, user.nombre, token);
     } catch (mailErr) {
       await prisma.emailVerificationToken.deleteMany({ where: { userId: user.id } });
-      await prisma.usuario.delete({ where: { id: user.id } });
+      await prisma.user.delete({ where: { id: user.id } });
       console.error('Error al enviar correo:', mailErr);
       return res.status(500).json({
         message:

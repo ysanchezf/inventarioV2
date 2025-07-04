@@ -6,6 +6,14 @@ import { CustomPrismaAdapter } from '../../../lib/customPrismaAdapter'
 import bcrypt from 'bcrypt'
 import { prisma } from '../../../lib/prisma'
 
+// Ensure Google OAuth scopes are defined before initializing NextAuth.
+if (!process.env.GOOGLE_OAUTH_SCOPES || process.env.GOOGLE_OAUTH_SCOPES.trim() === '') {
+  console.warn(
+    'GOOGLE_OAUTH_SCOPES is not set or empty. Using default "openid profile email". Check your .env file.'
+  )
+  process.env.GOOGLE_OAUTH_SCOPES = 'openid profile email'
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: CustomPrismaAdapter(prisma),
   pages: { signIn: '/auth/signin' },

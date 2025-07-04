@@ -6,7 +6,7 @@ async function main() {
 
   const hash = await bcrypt.hash('Admin@123', 10)
 
-  await prisma.usuario.upsert({
+  await prisma.user.upsert({
     where: { matricula: 'admin' },
     update: {},
     create: {

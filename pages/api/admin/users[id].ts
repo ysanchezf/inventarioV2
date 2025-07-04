@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         data.password = hash
       }
 
-      await prisma.usuario.update({
+      await prisma.user.update({
         where: { id },
         data,
       })

@@ -18,7 +18,7 @@ export default async function handler(
       return res.status(400).send('Token inválido o expirado')
     }
 
-    await prisma.usuario.update({
+    await prisma.user.update({
       where: { id: record.userId },
       data: { confirmed: true },
     })

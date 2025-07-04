@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const hash = await bcrypt.hash(password, 10)
-  await prisma.usuario.update({
+  await prisma.user.update({
     where: { id: record.userId },
     data: { password: hash },
   })

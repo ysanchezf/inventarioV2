@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const userId = Number(token.sub)
 
   // 2) Recupero departamento del usuario
-  const usr = await prisma.usuario.findUnique({
+  const usr = await prisma.user.findUnique({
     where: { id: userId },
     select: { departamentoId: true }
   })

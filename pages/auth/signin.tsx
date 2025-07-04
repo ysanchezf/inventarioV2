@@ -1,6 +1,7 @@
 // pages/auth/signin.tsx
 import { useState, FormEvent } from 'react'
 import { FiLogIn } from 'react-icons/fi'
+import { FcGoogle } from 'react-icons/fc'
 import { getCsrfToken, signIn, getSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -69,25 +70,27 @@ export default function SignIn({ csrfToken, confirmed }: Props) {
             required
           />
         </div>
-        <button type="submit" className="button primary large full-width signin-btn">
-          <FiLogIn /> Iniciar Sesión
-        </button>
+        <div className="button-row">
+          <button type="submit" className="button primary signin-btn">
+            <FiLogIn /> Iniciar Sesión
+          </button>
+          <Link href="/register" className="button secondary">
+            Registrarse
+          </Link>
+        </div>
+        <Link href="/auth/forgot-password" className="forgot-link">
+          Olvidé mi contraseña
+        </Link>
+        <p className="auth-alt-text">Puedes iniciar sesión con el siguiente servicio:</p>
         <button
           type="button"
-          className="button secondary large full-width"
+          className="google-icon-btn"
           onClick={() =>
             signIn('google', { callbackUrl: '/', prompt: 'select_account' })
           }
         >
-          Iniciar con Google
+          <FcGoogle size={24} />
         </button>
-        <Link href="/auth/forgot-password" className="button secondary large full-width">
-          Olvidé mi contraseña
-        </Link>
-        <div className="divider">¿No tienes cuenta?</div>
-        <Link href="/register" className="button secondary large full-width">
-          Registrarse
-        </Link>
       </form>
     </main>
   )

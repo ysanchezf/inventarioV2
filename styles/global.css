@@ -205,6 +205,45 @@ nav {
   left: 200%;
 }
 
+/* -------------------------------------------------------------------------- */
+/* 6.5) Formularios de Autenticación                                           */
+/* -------------------------------------------------------------------------- */
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.forgot-link {
+  display: block;
+  margin: 0.75rem 0;
+  color: var(--accent);
+  text-decoration: none;
+}
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.auth-alt-text {
+  margin: 0.75rem 0;
+  color: var(--muted);
+}
+
+.google-icon-btn {
+  background: var(--white);
+  border: none;
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px var(--shadow-light);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.google-icon-btn:hover {
+  transform: translateY(-2px);
+}
+
 /* ==========================================================================
    7) HERO
    ========================================================================== */

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { FiLogIn } from 'react-icons/fi';
+import { FcGoogle } from 'react-icons/fc';
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -149,14 +150,15 @@ export default function Register() {
         >
           {submitting ? 'Registrando...' : 'Registrarse'}
         </button>
+        <p className="auth-alt-text">Puedes registrarte con:</p>
         <button
           type="button"
-          className="button secondary large full-width"
+          className="google-icon-btn"
           onClick={() =>
             signIn('google', { callbackUrl: '/', prompt: 'select_account' })
           }
         >
-          Registrarse con Google
+          <FcGoogle size={24} />
         </button>
 
         <div className="divider">¿Ya tienes cuenta?</div>

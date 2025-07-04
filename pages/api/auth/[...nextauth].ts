@@ -61,8 +61,8 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === 'google') {
-        const allowed = ['@unphu.edu.do', '@gmail.com']
-        if (!allowed.some(domain => user.email?.endsWith(domain))) {
+        const allowedDomain = '@unphu.edu.do'
+        if (!user.email?.endsWith(allowedDomain)) {
           return false
         }
       }

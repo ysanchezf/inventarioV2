@@ -14,6 +14,11 @@ export function CustomPrismaAdapter(prisma: PrismaClient): Adapter {
   return {
     ...baseAdapter,
     async createUser(data: any) {
+      const allowedDomain = '@unphu.edu.do'
+      if (!data.email?.endsWith(allowedDomain)) {
+        throw new Error('Solo se permiten correos ' + allowedDomain)
+      }
+
       const [nombre, ...rest] = data.name?.split(' ') ?? ['']
       const apellido = rest.join(' ')
       const matricula = data.email

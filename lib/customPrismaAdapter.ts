@@ -43,5 +43,34 @@ export function CustomPrismaAdapter(prisma: PrismaClient): Adapter {
         emailVerified: null,
       } as unknown as AdapterUser
     },
+    /**
+     * The default Prisma adapter expects string IDs, but our schema uses
+     * integers. Convert incoming values to numbers before delegating to
+     * Prisma.
+     */
+    async getUser(id: string) {
+      return prisma.user.findUnique({ where: { id: Number(id) } }) as unknown as
+        AdapterUser | null
+    },
+    async updateUser({ id, ...data }: Partial<AdapterUser> & Pick<AdapterUser, 'id'>) {
+      return prisma.user.update({ where: { id: Number(id) }, data }) as unknown as
+        AdapterUser
+    },
+    async deleteUser(id: string) {
+      return prisma.user.delete({ where: { id: Number(id) } }) as unknown as
+        AdapterUser
+    },
+    async linkAccount(data: any) {
+      return baseAdapter.linkAccount!({
+        ...data,
+        userId: Number(data.userId),
+      })
+    },
+    async createSession(data: any) {
+      return baseAdapter.createSession!({
+        ...data,
+        userId: Number(data.userId),
+      })
+    },
   }
 }

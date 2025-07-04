@@ -1,6 +1,7 @@
 // pages/api/auth/[...nextauth].ts
 import NextAuth, { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import bcrypt from 'bcrypt'
 import { prisma } from '../../../lib/prisma'
@@ -41,8 +42,18 @@ export const authOptions: NextAuthOptions = {
         }
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === 'google') {
+        if (!user.email?.endsWith('@unphu.edu.do')) return false
+      }
+      return true
+    },
     // Guardamos el rol en el token
     async jwt({ token, user }) {
       if (user) {

@@ -72,6 +72,13 @@ export default function SignIn({ csrfToken, confirmed }: Props) {
         <button type="submit" className="button primary large full-width signin-btn">
           <FiLogIn /> Iniciar Sesión
         </button>
+        <button
+          type="button"
+          className="button secondary large full-width"
+          onClick={() => signIn('google')}
+        >
+          Iniciar con Google
+        </button>
         <Link href="/auth/forgot-password" className="button secondary large full-width">
           Olvidé mi contraseña
         </Link>

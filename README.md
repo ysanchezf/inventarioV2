@@ -12,16 +12,24 @@ Este proyecto utiliza Next.js y Prisma. Sigue los pasos a continuacion para conf
    ```bash
    npx prisma migrate dev
    # si la migración ya está aplicada puedes solo generar el cliente con:
-   npx prisma generate
+  npx prisma generate
    ```
 3. Levanta el servidor de desarrollo:
    ```bash
-   npm run dev
-   ```
+ npm run dev
+  ```
 
 ## Variables de entorno
 
 Copia `.env.example` a `.env` y ajusta los valores antes de iniciar la aplicacion.
+
+## Configurar OAuth de Google
+
+1. Crea un proyecto en [Google Cloud Console](https://console.cloud.google.com/).
+2. Habilita el inicio de sesión y crea credenciales OAuth 2.0.
+3. Usa `http://localhost:3000/api/auth/callback/google` como URI de redirección autorizada.
+4. Guarda el Client ID y Client Secret en `.env` como `GOOGLE_CLIENT_ID` y `GOOGLE_CLIENT_SECRET`.
+5. Ejecuta `npx prisma migrate dev` para crear la tabla `Account`.
 
 ## Confirmación de cuenta
 

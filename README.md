@@ -29,7 +29,8 @@ Copia `.env.example` a `.env` y ajusta los valores antes de iniciar la aplicacio
 2. Habilita el inicio de sesión y crea credenciales OAuth 2.0.
 3. Usa `http://localhost:3000/api/auth/callback/google` como URI de redirección autorizada.
 4. Guarda el Client ID y Client Secret en `.env` como `GOOGLE_CLIENT_ID` y `GOOGLE_CLIENT_SECRET`.
-5. Ejecuta `npx prisma migrate dev` para crear la tabla `Account`.
+5. Define los alcances en `GOOGLE_OAUTH_SCOPES` (consulta los [scopes disponibles](https://developers.google.com/identity/protocols/oauth2/scopes)).
+6. Ejecuta `npx prisma migrate dev` para crear la tabla `Account`.
 
 ## Confirmación de cuenta
 

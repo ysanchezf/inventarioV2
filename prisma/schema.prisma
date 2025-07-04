@@ -13,7 +13,8 @@ generator erd {
   format   = "svg" // puedes usar svg o png
 }
 
-model Usuario {
+model User {
+  @@map("Usuario")
   id                      Int                      @id @default(autoincrement())
   matricula               String                   @unique
   email                   String                   @unique
@@ -48,7 +49,7 @@ model Departamento {
   items       Item[]
 
   // Relación inversa para usuarios asignados
-  usuarios Usuario[] // ← añadido
+  usuarios User[] // ← añadido
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -85,7 +86,7 @@ model Solicitud {
   motivo         String
   estado         EstadoSolicitud @default(PENDIENTE)
   comentarios    String?
-  usuario        Usuario         @relation(fields: [usuarioId], references: [id])
+  usuario        User            @relation(fields: [usuarioId], references: [id])
   item           Item            @relation(fields: [itemId], references: [id])
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
@@ -108,7 +109,7 @@ model AuditLog {
   entityId  Int
   timestamp DateTime @default(now())
   changes   Json?
-  user      Usuario  @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@index([entity, entityId])
 }
@@ -117,7 +118,7 @@ model PasswordResetToken {
   id        Int      @id @default(autoincrement())
   token     String   @unique
   userId    Int
-  user      Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expires   DateTime
   createdAt DateTime @default(now())
 }
@@ -126,7 +127,7 @@ model EmailVerificationToken {
   id        Int      @id @default(autoincrement())
   token     String   @unique
   userId    Int
-  user      Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expires   DateTime
   createdAt DateTime @default(now())
 }
@@ -144,7 +145,7 @@ model Account {
   scope              String?
   id_token           String?  @db.Text
   session_state      String?
-  user               Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }

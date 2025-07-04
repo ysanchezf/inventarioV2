@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(creds) {
         if (!creds?.matricula || !creds.password) return null
 
-        const user = await prisma.usuario.findFirst({
+        const user = await prisma.user.findFirst({
           where: {
             OR: [
               { matricula: creds.matricula },

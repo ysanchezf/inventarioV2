@@ -256,7 +256,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
     orderBy: { nombre: 'asc' },
   })
 
-  const usuarios = await prisma.usuario.findMany({
+  const usuarios = await prisma.user.findMany({
     select: { id: true, nombre: true, apellido: true },
     orderBy: { nombre: 'asc' },
   })

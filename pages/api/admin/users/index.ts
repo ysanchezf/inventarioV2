@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // 2) GET /api/admin/users → lista usuarios
   if (req.method === 'GET') {
-    const users = await prisma.usuario.findMany({
+    const users = await prisma.user.findMany({
       select: {
         id: true,
         matricula: true,
@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     try {
       const hash = await bcrypt.hash(password, 10)
-      const created = await prisma.usuario.create({
+      const created = await prisma.user.create({
         data: { matricula, nombre, apellido, email, rol, password: hash, confirmed: true },
         select: {
           id: true,

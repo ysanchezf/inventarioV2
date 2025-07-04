@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { email } = req.body
   if (!email) return res.status(400).json({ message: 'Email requerido' })
 
-  const user = await prisma.usuario.findFirst({
+  const user = await prisma.user.findFirst({
     where: {
       OR: [{ email }, { matricula: email }],
     },

@@ -1,6 +1,7 @@
 // pages/register.tsx
 import { useState } from 'react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { FiLogIn } from 'react-icons/fi';
 
 export default function Register() {
@@ -147,6 +148,13 @@ export default function Register() {
           disabled={submitting}
         >
           {submitting ? 'Registrando...' : 'Registrarse'}
+        </button>
+        <button
+          type="button"
+          className="button secondary large full-width"
+          onClick={() => signIn('google')}
+        >
+          Registrarse con Google
         </button>
 
         <div className="divider">¿Ya tienes cuenta?</div>

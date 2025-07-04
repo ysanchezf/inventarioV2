@@ -26,6 +26,7 @@ model Usuario {
   auditLogs               AuditLog[] // Relación inversa para logs de este usuario
   passwordResetTokens     PasswordResetToken[]
   emailVerificationTokens EmailVerificationToken[]
+  accounts                Account[]
 
   // Campos para asignar departamento
   departamentoId Int? // ← añadido
@@ -128,4 +129,22 @@ model EmailVerificationToken {
   user      Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
   expires   DateTime
   createdAt DateTime @default(now())
+}
+
+model Account {
+  id                 Int      @id @default(autoincrement())
+  userId             Int
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+  user               Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }

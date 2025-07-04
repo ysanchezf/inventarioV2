@@ -9,8 +9,10 @@ generator client {
 
 generator erd {
   provider = "prisma-erd-generator"
-  output   = "./ERD"
+  output   = "./ERD.svg"
   format   = "svg" // puedes usar svg o png
+  mmdcPath = "./node_modules/prisma-erd-generator/node_modules/.bin"
+  puppeteerConfig = "./puppeteerConfig.json"
 }
 
 model User {

@@ -22,6 +22,7 @@ Este proyecto utiliza Next.js y Prisma. Sigue los pasos a continuacion para conf
 ## Variables de entorno
 
 Copia `.env.example` a `.env` y ajusta los valores antes de iniciar la aplicacion.
+La variable `NEXT_PUBLIC_IDLE_TIMEOUT_MINUTES` controla los minutos de inactividad antes de cerrar la sesión automaticamente (30 por defecto).
 
 ## Configurar OAuth de Google
 

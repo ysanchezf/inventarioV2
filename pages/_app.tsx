@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
 import '../styles/global.css'
+import AutoLogout from '../components/AutoLogout'
 
 // 1) Crea un QueryClient de React Query
 const queryClient = new QueryClient()
@@ -16,6 +17,7 @@ export default function App({
   return (
     // 2) Proveedor de sesión de NextAuth
     <SessionProvider session={session}>
+      <AutoLogout />
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

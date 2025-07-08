@@ -55,8 +55,11 @@ export function CustomPrismaAdapter(prisma: PrismaClient): Adapter {
      * Prisma.
      */
     async getUser(id: string) {
-      return prisma.user.findUnique({ where: { id: Number(id) } }) as unknown as
-        AdapterUser | null
+      const parsed = Number(id)
+      if (!Number.isSafeInteger(parsed)) return null
+      return prisma.user.findUnique({
+        where: { id: parsed },
+      }) as unknown as AdapterUser | null
     },
     async updateUser({ id, ...data }: Partial<AdapterUser> & Pick<AdapterUser, 'id'>) {
       return prisma.user.update({ where: { id: Number(id) }, data }) as unknown as

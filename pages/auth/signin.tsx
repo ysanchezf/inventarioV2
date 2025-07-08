@@ -38,9 +38,9 @@ export default function SignIn({ csrfToken, confirmed }: Props) {
 
     // Login OK: obtenemos la sesión actual
     const session = await getSession()
-    const role = (session?.user as any)?.role
+    const rol = (session?.user as any)?.rol
 
-    if (role === 'ADMIN') {
+    if (rol === 'ADMIN') {
       router.push('/admin')
     } else {
       router.push('/')

@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "2.x",
@@ -35,11 +36,10 @@
     "eslint": "8.x",
     "eslint-config-next": "12.x",
     "prisma": "^6.8.2",
-    "prisma-erd-generator": "^2.0.4",
     "ts-node": "^10.9.2",
     "typescript": "5.1"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
   }
- }
+}

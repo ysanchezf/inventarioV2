@@ -91,9 +91,13 @@ export default function SignIn({ csrfToken, confirmed }: Props) {
         <button
           type="button"
           className="google-icon-btn"
-          onClick={() =>
-            signIn('google', { callbackUrl: '/', prompt: 'select_account' })
-          }
+          onClick={async () => {
+            const res = await signIn('google', {
+              redirect: false,
+              prompt: 'select_account',
+            })
+            if (res?.url) router.push(res.url)
+          }}
         >
           <FcGoogle size={24} />
         </button>

@@ -39,6 +39,7 @@ export default async function handler(
         apellido,
         password: hashed,
         rol: 'USER',
+        mustCreatePassword: false,
       },
     });
 

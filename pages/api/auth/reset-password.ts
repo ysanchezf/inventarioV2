@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const hash = await bcrypt.hash(password, 10)
   await prisma.user.update({
     where: { id: record.userId },
-    data: { password: hash },
+    data: { password: hash, mustCreatePassword: false },
   })
   await prisma.passwordResetToken.delete({ where: { id: record.id } })
 

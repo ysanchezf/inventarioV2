@@ -17,6 +17,7 @@ async function main() {
       password: hash,
       confirmed: true,
       rol: 'ADMIN',
+      mustCreatePassword: false,
     },
   })
 

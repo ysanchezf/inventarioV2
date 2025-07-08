@@ -160,6 +160,7 @@ export default function Register() {
             const res = await signIn('google', {
               redirect: false,
               prompt: 'select_account',
+              callbackUrl: '/registro-exitoso',
             })
             if (res?.url) router.push(res.url)
           }}

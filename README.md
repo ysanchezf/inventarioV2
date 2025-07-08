@@ -38,3 +38,7 @@ La variable `NEXT_PUBLIC_IDLE_TIMEOUT_MINUTES` controla los minutos de inactivid
 Al registrarse, se genera un token de verificación único que se almacena en la tabla `EmailVerificationToken` y expira a las 24 horas. El correo de bienvenida incluye un enlace con este token. El usuario debe abrirlo para activar su cuenta.
 
 Si el token es válido se marca la columna `confirmed` en `Usuario` y el registro del token se elimina.
+
+## Deployment
+
+El script de construccion ejecuta `prisma generate` para crear el cliente de Prisma. En Vercel se deben definir `DATABASE_URL` y demas variables de entorno antes de compilar.

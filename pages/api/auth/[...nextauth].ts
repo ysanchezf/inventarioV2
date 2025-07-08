@@ -49,6 +49,7 @@ export const authOptions: NextAuthOptions = {
           name: `${user.nombre} ${user.apellido}`,
           email: user.email,
           rol: user.rol,
+          mustCreatePassword: user.mustCreatePassword,
         } as any
       },
     }),
@@ -66,18 +67,27 @@ export const authOptions: NextAuthOptions = {
           return false
         }
       }
+
+      const dbUser = await prisma.user.findUnique({
+        where: { id: Number(user.id) },
+      })
+      if (dbUser?.mustCreatePassword) {
+        return '/auth/set-password'
+      }
       return true
     },
     // Guardamos el rol en el token
     async jwt({ token, user }) {
       if (user) {
         token.rol = (user as any).rol
+        token.mustCreatePassword = (user as any).mustCreatePassword
       }
       return token
     },
     // Lo exponemos en session.user.rol
     async session({ session, token }) {
       ;(session.user as any).rol = token.rol
+      ;(session.user as any).mustCreatePassword = token.mustCreatePassword
       return session
     },
   },

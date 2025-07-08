@@ -34,6 +34,7 @@ export function CustomPrismaAdapter(prisma: PrismaClient): Adapter {
           email: data.email!,
           password,
           confirmed: true,
+          mustCreatePassword: true,
         },
       })
 

@@ -44,7 +44,6 @@ export async function GET(request: Request) {
     if (
       !session ||
       ((session.user as any).rol !== 'ADMIN' &&
-        (session.user as any).role !== 'admin' &&
         session.user?.email !== 'superadmin@unphu.edu.do')
     ) {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 })

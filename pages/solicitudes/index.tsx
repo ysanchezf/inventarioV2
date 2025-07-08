@@ -39,7 +39,7 @@ export default function SolicitudesPage() {
               <td>{new Date(s.fechaUso).toLocaleDateString()}</td>
               <td>{s.estado}</td>
               <td>
-                {s.estado === "PENDIENTE" && (sessionStorage.getItem("role")==="ADMIN") && (
+                {s.estado === "PENDIENTE" && (sessionStorage.getItem("rol")==="ADMIN") && (
                   <>
                     <button onClick={() => approve(s.id, "APROBADA")}>Aprobar</button>
                     <button onClick={() => approve(s.id, "RECHAZADA")}>Rechazar</button>

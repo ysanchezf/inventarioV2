@@ -69,7 +69,7 @@ export const authOptions: NextAuthOptions = {
       }
 
       const dbUser = await prisma.user.findUnique({
-        where: { id: Number(user.id) },
+        where: { email: user.email! },
       })
       if (dbUser?.mustCreatePassword) {
         return '/auth/set-password'

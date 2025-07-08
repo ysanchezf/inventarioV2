@@ -8,7 +8,7 @@ import { sendStatusEmail } from "../../../lib/mailer";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
-  if (!session || (session.user as any).role !== "ADMIN")
+  if (!session || (session.user as any).rol !== "ADMIN")
     return res.status(403).json({ error: "Solo admin" });
 
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });

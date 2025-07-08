@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { FiLogIn } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 
 export default function Register() {
+  const router = useRouter();
   const [form, setForm] = useState({
     matricula: '',
     nombre: '',
@@ -154,9 +156,13 @@ export default function Register() {
         <button
           type="button"
           className="google-icon-btn"
-          onClick={() =>
-            signIn('google', { callbackUrl: '/', prompt: 'select_account' })
-          }
+          onClick={async () => {
+            const res = await signIn('google', {
+              redirect: false,
+              prompt: 'select_account',
+            })
+            if (res?.url) router.push(res.url)
+          }}
         >
           <FcGoogle size={24} />
         </button>

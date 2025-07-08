@@ -17,6 +17,7 @@ model User {
   apellido                String
   password                String
   confirmed               Boolean                  @default(false)
+  mustCreatePassword      Boolean                  @default(false)
   rol                     Rol                      @default(USER)
   solicitudes             Solicitud[]
   auditLogs               AuditLog[] // Relación inversa para logs de este usuario

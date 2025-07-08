@@ -36,7 +36,6 @@
     "eslint": "8.x",
     "eslint-config-next": "12.x",
     "prisma": "^6.8.2",
-    "prisma-erd-generator": "^2.0.4",
     "ts-node": "^10.9.2",
     "typescript": "5.1"
   },

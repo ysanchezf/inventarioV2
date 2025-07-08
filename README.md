@@ -42,3 +42,16 @@ Si el token es válido se marca la columna `confirmed` en `Usuario` y el registr
 ## Deployment
 
 El script de construccion ejecuta `prisma generate` para crear el cliente de Prisma. En Vercel se deben definir `DATABASE_URL` y demas variables de entorno antes de compilar.
+
+
+## Generar el diagrama ERD
+
+Para crear el diagrama de entidad-relacion de forma local instala el generador y ejecutalo manualmente:
+
+```bash
+npm install -D prisma-erd-generator @mermaid-js/mermaid-cli
+npx prisma-erd-generator --schema prisma/schema.prisma --output prisma/ERD.svg --format svg --puppeteerConfig ./puppeteerConfig.json
+```
+
+Se generara `prisma/ERD.svg` con el modelo actual.
+

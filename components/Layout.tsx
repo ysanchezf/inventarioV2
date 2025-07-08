@@ -58,6 +58,11 @@ export default function Layout({ children }: Props) {
                         Reporte
                       </Link>
                     </li>
+                    <li>
+                      <Link href="/perfil" className="nav-link">
+                        Perfil
+                      </Link>
+                    </li>
                   </>
                 ) : (
                   <>
@@ -74,6 +79,11 @@ export default function Layout({ children }: Props) {
                     <li>
                       <Link href="/nueva-solicitud" className="nav-link">
                         Nueva Solicitud
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/perfil" className="nav-link">
+                        Perfil
                       </Link>
                     </li>
                     <li>

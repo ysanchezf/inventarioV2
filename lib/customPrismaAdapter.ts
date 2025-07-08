@@ -24,7 +24,9 @@ export function CustomPrismaAdapter(prisma: PrismaClient): Adapter {
       const matricula = data.email
         ? data.email.split('@')[0]
         : randomBytes(6).toString('hex')
-      const password = await bcrypt.hash(randomBytes(16).toString('hex'), 10)
+      // Establecemos la contraseña por defecto con el formato "{matricula}@2020"
+      const defaultPassword = `${matricula}@2020`
+      const password = await bcrypt.hash(defaultPassword, 10)
 
       const user = await prisma.user.create({
         data: {
@@ -34,7 +36,9 @@ export function CustomPrismaAdapter(prisma: PrismaClient): Adapter {
           email: data.email!,
           password,
           confirmed: true,
-          mustCreatePassword: true,
+          // El usuario ya tiene una contraseña asignada, por lo que no
+          // requerimos que cree una al iniciar sesión
+          mustCreatePassword: false,
         },
       })
 

@@ -55,3 +55,12 @@ npx prisma-erd-generator --schema prisma/schema.prisma --output prisma/ERD.svg -
 
 Se generara `prisma/ERD.svg` con el modelo actual.
 
+## Perfil de usuario
+
+Al registrarse mediante Google, la aplicación asigna por defecto la contraseña
+`{matrícula}@2020` (siendo la parte antes del `@` en su correo). Esta y los
+datos de nombre pueden actualizarse luego desde la nueva página **Mi Perfil**
+disponible en el menú principal. Tras completar el registro con Google se
+muestra una pantalla confirmando el proceso y revelando dicha contraseña
+temporal, la cual debe cambiarse después de iniciar sesión.
+

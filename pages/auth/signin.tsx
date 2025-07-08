@@ -39,6 +39,12 @@ export default function SignIn({ csrfToken, confirmed }: Props) {
     // Login OK: obtenemos la sesión actual
     const session = await getSession()
     const rol = (session?.user as any)?.rol
+    const mustCreate = (session?.user as any)?.mustCreatePassword
+
+    if (mustCreate) {
+      router.push('/auth/set-password')
+      return
+    }
 
     if (rol === 'ADMIN') {
       router.push('/admin')

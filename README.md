@@ -64,3 +64,4 @@ disponible en el menú principal. Tras completar el registro con Google se
 muestra una pantalla confirmando el proceso y revelando dicha contraseña
 temporal, la cual debe cambiarse después de iniciar sesión.
 
+

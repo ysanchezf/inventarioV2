@@ -1,5 +1,5 @@
 // components/Layout.tsx
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -9,6 +9,15 @@ type Props = { children: ReactNode };
 export default function Layout({ children }: Props) {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleRouteChange = () => setMenuOpen(false);
+    router.events.on('routeChangeStart', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, [router]);
   if (status === 'loading') return null;
 
   const user = session?.user as { rol?: string; name?: string };
@@ -23,8 +32,15 @@ export default function Layout({ children }: Props) {
             <Link href={logoHref} className="logo">
               UNPHU Inventario
             </Link>
+            <button
+              className="nav-toggle"
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label="Menú"
+            >
+              ☰
+            </button>
             <nav>
-              <ul className="nav-list">
+              <ul className={`nav-list${menuOpen ? ' open' : ''}`}>
                 {isAdmin ? (
                   <>
                     <li>

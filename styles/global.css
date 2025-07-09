@@ -594,4 +594,7 @@ footer {
   .features {
     grid-template-columns: 1fr;
   }
+  .table-minimal {
+    display: block;
+  }
 }

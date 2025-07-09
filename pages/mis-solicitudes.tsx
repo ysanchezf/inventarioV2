@@ -91,6 +91,7 @@ export default function MisSolicitudes() {
         ) : solicitudes.length === 0 ? (
           <p>No tienes solicitudes para mostrar.</p>
         ) : (
+          <div style={{ overflowX: 'auto' }}>
           <table className="table-minimal">
             <thead>
               <tr>
@@ -179,6 +180,7 @@ export default function MisSolicitudes() {
               })}
             </tbody>
           </table>
+          </div>
         )}
       </section>
     </Layout>

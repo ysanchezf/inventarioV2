@@ -43,7 +43,8 @@ export default function AuditPage({ logs }: Props) {
     <Layout>
       <section className="app-container">
         <h2>Historial de Auditoría</h2>
-        <table className="table-minimal">
+        <div style={{ overflowX: 'auto' }}>
+          <table className="table-minimal">
           <thead>
             <tr>
               <th>Fecha</th>
@@ -66,7 +67,8 @@ export default function AuditPage({ logs }: Props) {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </section>
     </Layout>
   )

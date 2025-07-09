@@ -105,7 +105,8 @@ export default function AdminRequestsPage() {
           </button>
         </div>
 
-        <table className="table-minimal">
+        <div style={{ overflowX: 'auto' }}>
+          <table className="table-minimal">
           <thead>
             <tr>
               <th>Fecha</th>
@@ -148,7 +149,8 @@ export default function AdminRequestsPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </section>
     </Layout>
   )

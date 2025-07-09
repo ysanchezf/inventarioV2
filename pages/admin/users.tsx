@@ -160,7 +160,8 @@ export default function AdminUsers({ users }: Props) {
       </section>
 
       <section className="app-container">
-        <table className="table-minimal">
+        <div style={{ overflowX: 'auto' }}>
+          <table className="table-minimal">
           <thead>
             <tr>
               <th>Matrícula</th>
@@ -196,7 +197,8 @@ export default function AdminUsers({ users }: Props) {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </section>
 
       {showModal && (

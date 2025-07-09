@@ -280,7 +280,8 @@ export default function AdminItems({
       )}
 
       <section className="app-container">
-        <table className="table-minimal">
+        <div style={{ overflowX: 'auto' }}>
+          <table className="table-minimal">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -314,7 +315,8 @@ export default function AdminItems({
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </section>
     </Layout>
   )

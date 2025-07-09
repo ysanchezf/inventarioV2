@@ -130,6 +130,10 @@ nav {
 .session-user {
   font-weight: 500;
   color: var(--white);
+  max-width: 12ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .btn-logout {
   padding: 0.5rem 1rem;

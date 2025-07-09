@@ -41,8 +41,18 @@ export default function SolicitudesPage() {
               <td>
                 {s.estado === "PENDIENTE" && (sessionStorage.getItem("rol")==="ADMIN") && (
                   <>
-                    <button onClick={() => approve(s.id, "APROBADA")}>Aprobar</button>
-                    <button onClick={() => approve(s.id, "RECHAZADA")}>Rechazar</button>
+                    <button
+                      className="btn btn-small btn-primary"
+                      onClick={() => approve(s.id, "APROBADA")}
+                    >
+                      Aprobar
+                    </button>
+                    <button
+                      className="btn btn-small btn-secondary"
+                      onClick={() => approve(s.id, "RECHAZADA")}
+                    >
+                      Rechazar
+                    </button>
                   </>
                 )}
               </td>

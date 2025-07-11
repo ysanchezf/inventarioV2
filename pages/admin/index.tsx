@@ -25,35 +25,35 @@ export default function AdminDashboard({ name }: Props) {
       <section className="features">
         <Link href="/admin/requests" className="card-wrapper">
           <div className="card">
-            <FiFileText size={32} color="#3498db" />
+            <FiFileText size={32} color="var(--accent)" />
             <h4>Solicitudes</h4>
             <p>Revisar y aprobar/rechazar</p>
           </div>
         </Link>
         <Link href="/admin/users" className="card-wrapper">
           <div className="card">
-            <FiUserPlus size={32} color="#16A085" />
+            <FiUserPlus size={32} color="var(--accent)" />
             <h4>Usuarios</h4>
             <p>Crear y gestionar usuarios</p>
           </div>
         </Link>
         <Link href="/admin/departments" className="card-wrapper">
           <div className="card">
-            <FiHome size={32} color="#f39c12" />
+            <FiHome size={32} color="var(--accent)" />
             <h4>Departamentos</h4>
             <p>Crear/editar departamentos</p>
           </div>
         </Link>
         <Link href="/admin/items" className="card-wrapper">
           <div className="card">
-            <FiBox size={32} color="#2ecc71" />
+            <FiBox size={32} color="var(--accent)" />
             <h4>Equipos</h4>
             <p>Registrar/editar equipos</p>
           </div>
         </Link>
 <Link href="/admin/audit" className="card-wrapper">
   <div className="card">
-    <FiClipboard size={32} color="#9b59b6" />
+    <FiClipboard size={32} color="var(--accent)" />
     <h4>Auditoría</h4>
     <p>Ver historial de cambios</p>
   </div>

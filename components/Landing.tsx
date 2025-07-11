@@ -56,19 +56,19 @@ export default function Landing() {
         <div className="features">
           {[
             {
-              icon: <FiBox size={32} color="#16A085" />,
+              icon: <FiBox size={32} color="var(--accent)" />,
               title: 'Gestión de Inventario',
               text:
                 'Control completo de los equipos disponibles en los departamentos de Audiovisual y Tecnología.',
             },
             {
-              icon: <FiClipboard size={32} color="#16A085" />,
+              icon: <FiClipboard size={32} color="var(--accent)" />,
               title: 'Solicitudes de Préstamo',
               text:
                 'Solicita equipos de forma fácil y rápida especificando fechas, horas y motivo de uso.',
             },
             {
-              icon: <FiCheckSquare size={32} color="#16A085" />,
+              icon: <FiCheckSquare size={32} color="var(--accent)" />,
               title: 'Aprobación de Solicitudes',
               text:
                 'Sistema de aprobación para administradores con seguimiento del estado de cada solicitud.',

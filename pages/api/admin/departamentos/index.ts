@@ -20,13 +20,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // 3) Crear nuevo departamento
   if (req.method === 'POST') {
-    const { nombre, descripcion } = req.body
+    const { nombre, descripcion, usuarios } = req.body
     if (!nombre) {
       return res.status(400).json({ message: 'Falta nombre' })
     }
     try {
       const created = await prisma.departamento.create({
-        data: { nombre, descripcion: descripcion || undefined },
+        data: {
+          nombre,
+          descripcion: descripcion || undefined,
+          ...(Array.isArray(usuarios) && usuarios.length
+            ? {
+                usuarios: {
+                  connect: usuarios.map((uid: number) => ({ id: uid })),
+                },
+              }
+            : {}),
+        },
+        include: { usuarios: { select: { id: true, nombre: true, apellido: true } } },
       })
       return res.status(201).json(created)
     } catch (e: any) {

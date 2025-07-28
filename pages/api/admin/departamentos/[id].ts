@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const updated = await prisma.departamento.update({
         where: { id: depId },
         data,
-        include: { usuarios: { select: { id: true } } },
+        include: { usuarios: { select: { id: true, nombre: true, apellido: true } } },
       })
       await prisma.auditLog.create({
         data: {

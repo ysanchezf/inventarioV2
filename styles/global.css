@@ -303,6 +303,8 @@ nav {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   padding: 4rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .card {
   background: var(--surface);

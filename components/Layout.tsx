@@ -20,6 +20,8 @@ export default function Layout({ children }: Props) {
   }, [router]);
   if (status === 'loading') return null;
 
+  const isHome = router.pathname === '/';
+
   const user = session?.user as { rol?: string; name?: string };
   const isAdmin = user?.rol === 'ADMIN';
   const logoHref = isAdmin ? '/admin' : '/';
@@ -123,7 +125,7 @@ export default function Layout({ children }: Props) {
           </div>
         </header>
       )}
-      <main className="main-content">{children}</main>
+      <main className={`main-content${isHome ? '' : ' page-center'}`}>{children}</main>
       <footer>
         <div className="app-container footer-flex">
           <span>© {new Date().getFullYear()} UNPHU – Inventario</span>

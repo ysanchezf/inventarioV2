@@ -33,31 +33,34 @@ export default function Landing() {
         </div>
       </header>
 
-      {/* ─── HERO ─── */}
-      <section className="hero">
-        <h2>Sistema de Inventario UNPHU</h2>
-        <p>
-          Gestiona de manera eficiente el inventario de equipos tecnológicos y
-          audiovisuales de la universidad.
-        </p>
-        <div className="hero-buttons">
-          <Link href="/auth/signin" className="button primary large signin-btn">
-            <FiLogIn /> Iniciar Sesión
-          </Link>
-          <Link href="/register" className="button secondary large">
-            Registrarse
-          </Link>
-        </div>
-      </section>
+      <main className="main-content">
+        {/* ─── HERO ─── */}
+        <section className="hero">
+          <div className="app-container">
+            <h2>Sistema de Inventario UNPHU</h2>
+            <p>
+              Gestiona de manera eficiente el inventario de equipos tecnológicos y
+              audiovisuales de la universidad.
+            </p>
+            <div className="hero-buttons">
+              <Link href="/auth/signin" className="button primary large signin-btn">
+                <FiLogIn /> Iniciar Sesión
+              </Link>
+              <Link href="/register" className="button secondary large">
+                Registrarse
+              </Link>
+            </div>
+          </div>
+        </section>
 
-      {/* ─── SECCIÓN DE CARACTERÍSTICAS ─── */}
-      <section>
-        <h3>Características del Sistema</h3>
-        <div className="features">
-          {[
-            {
-              icon: <FiBox size={32} color="var(--accent)" />,
-              title: 'Gestión de Inventario',
+        {/* ─── SECCIÓN DE CARACTERÍSTICAS ─── */}
+        <section className="app-container">
+          <h3>Características del Sistema</h3>
+          <div className="features">
+            {[
+              {
+                icon: <FiBox size={32} color="var(--accent)" />,
+                title: 'Gestión de Inventario',
               text:
                 'Control completo de los equipos disponibles en los departamentos de Audiovisual y Tecnología.',
             },
@@ -73,17 +76,18 @@ export default function Landing() {
               text:
                 'Sistema de aprobación para administradores con seguimiento del estado de cada solicitud.',
             },
-          ].map(({ icon, title, text }) => (
-            <div key={title} className="card-wrapper">
-              <h4 className="card-title">{title}</h4>
-              <div className="card">
-                {icon}
-                <p>{text}</p>
+            ].map(({ icon, title, text }) => (
+              <div key={title} className="card-wrapper">
+                <h4 className="card-title">{title}</h4>
+                <div className="card">
+                  {icon}
+                  <p>{text}</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      </main>
 
       {/* ─── FOOTER ─── */}
       <footer>

@@ -6,6 +6,7 @@ import { getCsrfToken, signIn, getSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Layout from '../../components/Layout'
 
 type Props = {
   csrfToken: string | null
@@ -54,7 +55,8 @@ export default function SignIn({ csrfToken, confirmed }: Props) {
   }
 
   return (
-    <main className="register-page">
+    <Layout>
+      <main className="register-page">
       <h2>Iniciar Sesión</h2>
       {msg && <p className="subheading" style={{ color: msg.includes('incorrecta') ? 'red' : undefined }}>{msg}</p>}
       <form className="form-card" onSubmit={handleSubmit}>
@@ -103,6 +105,7 @@ export default function SignIn({ csrfToken, confirmed }: Props) {
         </button>
       </form>
     </main>
+    </Layout>
   )
 }
 

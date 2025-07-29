@@ -10,18 +10,6 @@ type DashboardProps = {
 export default function Dashboard({ name, counts }: DashboardProps) {
   return (
     <>
-      <header>
-        <div className="app-container">
-          <h1>UNPHU Inventario</h1>
-          {/* Los botones de login/registro ya están ocultos desde Layout */}
-          <div style={{ textAlign: 'right' }}>
-            <Link href="/nueva-solicitud" className="button primary">
-              Nueva Solicitud
-            </Link>
-          </div>
-        </div>
-      </header>
-
       <section className="app-container" style={{ padding: '2rem 1rem' }}>
         <h2>¡Bienvenido, {name}!</h2>
         <p style={{ color: '#555' }}>
@@ -69,13 +57,6 @@ export default function Dashboard({ name, counts }: DashboardProps) {
           </li>
         </ol>
       </section>
-
-      <footer>
-        <div className="app-container">
-          <span>© {new Date().getFullYear()} UNPHU – Sistema de Inventario</span>
-          <span>República Dominicana</span>
-        </div>
-      </footer>
     </>
   )
 }

@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { FiLogIn } from 'react-icons/fi'
+import Layout from '../../components/Layout'
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
@@ -29,18 +30,21 @@ export default function ForgotPassword() {
 
   if (message) {
     return (
-      <main className="register-page">
-        <h2>Recuperar contraseña</h2>
-        <p className="subheading">{message}</p>
-        <Link href="/auth/signin" className="button primary signin-btn">
-          <FiLogIn /> Iniciar Sesión
-        </Link>
-      </main>
+      <Layout>
+        <main className="register-page">
+          <h2>Recuperar contraseña</h2>
+          <p className="subheading">{message}</p>
+          <Link href="/auth/signin" className="button primary signin-btn">
+            <FiLogIn /> Iniciar Sesión
+          </Link>
+        </main>
+      </Layout>
     )
   }
 
   return (
-    <main className="register-page">
+    <Layout>
+      <main className="register-page">
       <h2>¿Olvidaste tu contraseña?</h2>
       <p className="subheading">Ingresa tu correo para recibir instrucciones</p>
       <form className="form-card" onSubmit={handleSubmit}>
@@ -62,5 +66,6 @@ export default function ForgotPassword() {
         </Link>
       </form>
     </main>
+    </Layout>
   )
 }

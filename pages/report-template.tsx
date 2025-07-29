@@ -37,7 +37,7 @@ interface Props {
 
 const ReportTemplate: React.FC<Props> = ({ reportData, periodo, tipo }) => {
   return (
-    <div className="app-container" style={{ padding: '2rem' }}>
+    <div className="app-container main-content" style={{ padding: '2rem' }}>
       <h1 className="text-2xl font-bold mb-4">Informe de Solicitudes</h1>
       <p className="text-sm text-gray-600 mb-6">
         Periodo: {periodo} (de {reportData.meta.fechaInicio} a {reportData.meta.fechaFin})

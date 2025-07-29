@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { FiLogIn } from 'react-icons/fi'
+import Layout from '../../components/Layout'
 
 export default function ResetPassword() {
   const router = useRouter()
@@ -38,32 +39,37 @@ export default function ResetPassword() {
 
   if (!tokenParam && router.isReady) {
     return (
-      <main className="register-page">
-        <h2>Cambiar contraseña</h2>
-        <p className="subheading">
-          El enlace de recuperación no es válido o ha expirado.
-        </p>
-        <Link href="/auth/forgot-password" className="button primary">
-          Solicitar nuevo enlace
-        </Link>
-      </main>
+      <Layout>
+        <main className="register-page">
+          <h2>Cambiar contraseña</h2>
+          <p className="subheading">
+            El enlace de recuperación no es válido o ha expirado.
+          </p>
+          <Link href="/auth/forgot-password" className="button primary">
+            Solicitar nuevo enlace
+          </Link>
+        </main>
+      </Layout>
     )
   }
 
   if (message) {
     return (
-      <main className="register-page">
-        <h2>Cambiar contraseña</h2>
-        <p className="subheading">{message}</p>
-        <Link href="/auth/signin" className="button primary signin-btn">
-          <FiLogIn /> Iniciar Sesión
-        </Link>
-      </main>
+      <Layout>
+        <main className="register-page">
+          <h2>Cambiar contraseña</h2>
+          <p className="subheading">{message}</p>
+          <Link href="/auth/signin" className="button primary signin-btn">
+            <FiLogIn /> Iniciar Sesión
+          </Link>
+        </main>
+      </Layout>
     )
   }
 
   return (
-    <main className="register-page">
+    <Layout>
+      <main className="register-page">
       <h2>Cambiar contraseña</h2>
       <form className="form-card" onSubmit={handleSubmit}>
         {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
@@ -92,5 +98,6 @@ export default function ResetPassword() {
         </button>
       </form>
     </main>
+    </Layout>
   )
 }

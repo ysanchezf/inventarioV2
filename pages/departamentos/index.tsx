@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from "axios";
 import { DepartmentForm } from "../../components/DepartmentForm";
+import Layout from "../../components/Layout";
 
 export default function DeptPage() {
   const { data, refetch } = useQuery({
@@ -9,7 +10,8 @@ export default function DeptPage() {
   });
 
   return (
-    <div>
+    <Layout>
+      <div className="main-content">
       <h1>Departamentos</h1>
       <DepartmentForm onSaved={refetch} />
       <ul>
@@ -20,6 +22,7 @@ export default function DeptPage() {
           </li>
         ))}
       </ul>
-    </div>
+      </div>
+    </Layout>
   );
 }

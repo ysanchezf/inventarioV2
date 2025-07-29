@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from "axios";
 import { RequestForm } from "../../components/RequestForm";
+import Layout from "../../components/Layout";
 
 export default function SolicitudesPage() {
   const { data: items } = useQuery({
@@ -18,7 +19,8 @@ export default function SolicitudesPage() {
   };
 
   return (
-    <div>
+    <Layout>
+      <div className="main-content">
       <h1>Crear Solicitud</h1>
       <RequestForm items={items || []} />
 
@@ -60,6 +62,7 @@ export default function SolicitudesPage() {
           ))}
         </tbody>
       </table>
-    </div>
+      </div>
+    </Layout>
   );
 }

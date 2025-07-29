@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FiLogIn } from 'react-icons/fi'
+import Layout from '../../components/Layout'
 
 export default function SetPassword() {
   const [password, setPassword] = useState('')
@@ -35,18 +36,21 @@ export default function SetPassword() {
 
   if (message) {
     return (
-      <main className="register-page">
-        <h2>Crear contraseña</h2>
-        <p className="subheading">{message}</p>
-        <Link href="/auth/signin" className="button primary signin-btn">
-          <FiLogIn /> Iniciar Sesión
-        </Link>
-      </main>
+      <Layout>
+        <main className="register-page">
+          <h2>Crear contraseña</h2>
+          <p className="subheading">{message}</p>
+          <Link href="/auth/signin" className="button primary signin-btn">
+            <FiLogIn /> Iniciar Sesión
+          </Link>
+        </main>
+      </Layout>
     )
   }
 
   return (
-    <main className="register-page">
+    <Layout>
+      <main className="register-page">
       <h2>Crear contraseña</h2>
       <form className="form-card" onSubmit={handleSubmit}>
         {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
@@ -75,6 +79,7 @@ export default function SetPassword() {
         </button>
       </form>
     </main>
+    </Layout>
   )
 }
 

@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import InformePDF from '@/components/InformePDF'
+import Layout from '../../../components/Layout'
 
 type Equipo = {
   id: number
@@ -111,19 +112,22 @@ export default function InformesPage() {
 
   if (status === 'loading') {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-700" />
-      </div>
+      <Layout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-700" />
+        </div>
+      </Layout>
     )
   }
 
   if (status === 'unauthenticated' || (session && (session.user as any).rol !== 'ADMIN')) {
-    return null
+    return <Layout><p className="p-4">Acceso no autorizado</p></Layout>
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen py-6">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <Layout>
+      <div className="bg-gray-50 min-h-screen py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Título y botón “Volver a Solicitudes” */}
         <div className="md:flex md:items-center md:justify-between mb-8">
           <div className="min-w-0 flex-1">
@@ -479,5 +483,6 @@ export default function InformesPage() {
         )}
       </div>
     </div>
+    </Layout>
   )
 }

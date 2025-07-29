@@ -5,6 +5,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FiLogIn } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
+import Layout from '../components/Layout';
 
 export default function Register() {
   const router = useRouter();
@@ -58,18 +59,21 @@ export default function Register() {
 
   if (submittedMessage) {
     return (
-      <main className="register-page">
-        <h2>¡Registro exitoso!</h2>
-        <p className="subheading">{submittedMessage}</p>
-        <Link href="/auth/signin" className="button primary signin-btn">
-          <FiLogIn /> Ir a Iniciar Sesión
-        </Link>
-      </main>
+      <Layout>
+        <main className="register-page">
+          <h2>¡Registro exitoso!</h2>
+          <p className="subheading">{submittedMessage}</p>
+          <Link href="/auth/signin" className="button primary signin-btn">
+            <FiLogIn /> Ir a Iniciar Sesión
+          </Link>
+        </main>
+      </Layout>
     );
   }
 
   return (
-    <main className="register-page">
+    <Layout>
+      <main className="register-page">
       <h2>Crear cuenta</h2>
       <p className="subheading">Sistema de Inventario UNPHU</p>
       <form className="form-card" onSubmit={handleSubmit}>
@@ -174,5 +178,6 @@ export default function Register() {
         </Link>
       </form>
     </main>
+    </Layout>
   );
 }

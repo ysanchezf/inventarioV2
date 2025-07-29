@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-type Props = { children: ReactNode };
+type Props = { children: ReactNode; center?: boolean };
 
-export default function Layout({ children }: Props) {
+export default function Layout({ children, center = false }: Props) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,8 +19,6 @@ export default function Layout({ children }: Props) {
     };
   }, [router]);
   if (status === 'loading') return null;
-
-  const isHome = router.pathname === '/';
 
   const user = session?.user as { rol?: string; name?: string };
   const isAdmin = user?.rol === 'ADMIN';
@@ -125,7 +123,7 @@ export default function Layout({ children }: Props) {
           </div>
         </header>
       )}
-      <main className={`main-content${isHome ? '' : ' page-center'}`}>{children}</main>
+      <main className={`main-content${center ? ' page-center' : ''}`}>{children}</main>
       <footer>
         <div className="app-container footer-flex">
           <span>© {new Date().getFullYear()} UNPHU – Inventario</span>
